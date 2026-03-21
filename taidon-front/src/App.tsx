@@ -1,12 +1,14 @@
-import { AppProvider } from './contexts/AppContext';
-import Router from './components/Router';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import MainPage from './pages/MainPage/MainPage';
 
 function App() {
   return (
-    <AppProvider>
-      <Router />
-    </AppProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+      </Routes>
+    </Router>
   );
 }
 

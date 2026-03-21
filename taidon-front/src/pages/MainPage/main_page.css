@@ -1,0 +1,790 @@
+/* Main Page Styles */
+* {
+  box-sizing: border-box;
+}
+
+.main-page {
+  background: var(--background);
+  color: var(--on-surface);
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Navigation */
+.main-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  background: var(--surface-container-low);
+  border-bottom: 1px solid var(--outline);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4rem;
+  height: 4rem;
+  width: 100%;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  transition: color 0.3s ease;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--on-surface);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Buttons */
+.theme-toggle {
+  background: var(--surface-container-high);
+  border: 1px solid var(--outline);
+  color: var(--on-surface);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-container-highest);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s;
+}
+
+.btn-text:hover {
+  color: var(--on-surface);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+  color: var(--on-primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+.btn-secondary {
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  border: 1px solid var(--outline);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: var(--surface-container-highest);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.btn-outline:hover {
+  background: var(--surface-container-high);
+}
+
+/* Main Content */
+.main-content {
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+  width: 100%;
+}
+
+/* Hero Section */
+.hero-section {
+  width: 100%;
+  margin: 0 auto 8rem;
+  padding: 0 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--surface-container-high);
+  border-radius: 9999px;
+  border: 1px solid var(--outline);
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.badge-icon {
+  font-size: 0.875rem;
+  color: var(--tertiary);
+}
+
+.badge-text {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--tertiary);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.hero-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  max-width: 1000px;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: var(--on-surface-variant);
+  max-width: 700px;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+
+/* Editor Preview */
+.editor-preview {
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--outline);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  background: var(--surface-container-low);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.editor-header {
+  height: 2rem;
+  background: var(--surface-container);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.traffic-lights {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.light {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.light-red {
+  background: rgba(255, 180, 171, 0.4);
+}
+
+.light-yellow {
+  background: rgba(255, 183, 131, 0.4);
+}
+
+.light-green {
+  background: rgba(74, 225, 131, 0.4);
+}
+
+.file-tab {
+  margin-left: 1rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--surface-container-highest);
+  border-radius: 0.25rem;
+  font-size: 0.625rem;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--on-surface-variant);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editor-placeholder {
+  padding: 2rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  background: var(--background);
+  transition: background-color 0.3s ease;
+}
+
+.code-line {
+  color: var(--on-surface);
+  transition: color 0.3s ease;
+}
+
+.keyword {
+  color: var(--syntax-keyword);
+  font-weight: 500;
+}
+
+.function {
+  color: var(--syntax-function);
+}
+
+.string {
+  color: var(--syntax-string);
+}
+
+.number {
+  color: var(--syntax-number);
+}
+
+.comment {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+/* Features Section */
+.features-section {
+  width: 100%;
+  margin: 0 auto 8rem;
+  padding: 0 4rem;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: var(--surface-container);
+  padding: 3rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--outline);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-large {
+  grid-column: span 8;
+}
+
+.feature-vertical {
+  grid-column: span 4;
+  text-align: center;
+  align-items: center;
+}
+
+.feature-wide {
+  grid-column: span 8;
+}
+
+.feature-card:nth-child(3) {
+  grid-column: span 4;
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.feature-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.feature-description {
+  color: var(--on-surface-variant);
+  line-height: 1.6;
+  max-width: 450px;
+  transition: color 0.3s ease;
+}
+
+.feature-tags {
+  display: flex;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.tag {
+  padding: 0.5rem 1rem;
+  background: var(--surface-container-highest);
+  border-radius: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease;
+}
+
+.performance-metric {
+  margin-bottom: 1.5rem;
+}
+
+.metric-value {
+  font-family: 'Manrope', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--tertiary);
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.metric-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.feature-content-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.security-badge {
+  width: 12rem;
+  height: 12rem;
+  background: var(--surface-container-highest);
+  border-radius: 50%;
+  border: 1px solid var(--tertiary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.security-icon {
+  font-size: 4rem;
+}
+
+/* Code Section */
+.code-section {
+  width: 100%;
+  margin: 0 auto 8rem;
+  padding: 0 4rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  color: var(--on-surface-variant);
+  transition: color 0.3s ease;
+}
+
+.code-snippet {
+  background: var(--background);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--outline-variant);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  overflow-x: auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.line-number {
+  color: var(--on-surface-variant);
+  opacity: 0.4;
+  width: 2rem;
+  display: inline-block;
+  user-select: none;
+  margin-right: 1rem;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  width: 100%;
+  margin: 0 auto 8rem;
+  padding: 0 4rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background: var(--surface-container);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--outline);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.testimonial-text {
+  font-style: italic;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: var(--on-surface);
+  transition: color 0.3s ease;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.author-avatar-primary {
+  background: var(--primary-fixed);
+  color: var(--primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.author-avatar-secondary {
+  background: var(--tertiary-container);
+  color: var(--tertiary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.author-avatar-tertiary {
+  background: var(--accent-orange-container);
+  color: var(--accent-orange);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.author-name {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.author-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.625rem;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+}
+
+/* Pricing Section */
+.pricing-section {
+  width: 100%;
+  margin: 0 auto 8rem;
+  padding: 0 4rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--outline);
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--outline);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pricing-card {
+  background: var(--background);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.pricing-card-featured {
+  background: var(--surface-container);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--primary-fixed);
+  color: var(--primary);
+  font-size: 0.625rem;
+  font-family: 'Space Grotesk', sans-serif;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pricing-tier {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-price {
+  margin-bottom: 2rem;
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.price-period {
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem 0;
+  flex-grow: 1;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--on-surface-variant);
+  transition: color 0.3s ease;
+}
+
+.pricing-card-featured .pricing-features li {
+  color: var(--on-surface);
+}
+
+.check-icon {
+  color: var(--tertiary);
+  font-size: 0.875rem;
+}
+
+/* CTA Section */
+.cta-section {
+  width: 100%;
+  margin: 0 auto 8rem;
+  padding: 0 4rem;
+}
+
+.cta-card {
+  background: var(--primary-fixed);
+  border: 1px solid var(--primary-fixed);
+  border-radius: 1.5rem;
+  padding: 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16rem;
+  height: 16rem;
+  background: var(--primary-fixed);
+  filter: blur(100px);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.cta-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-description {
+  color: var(--on-surface-variant);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-large,
+  .feature-vertical,
+  .feature-wide,
+  .feature-card:nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons button {
+    width: 100%;
+  }
+
+  .feature-content-horizontal {
+    flex-direction: column;
+  }
+
+  .security-badge {
+    display: none;
+  }
+}
