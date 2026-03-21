@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile | SQL Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed-dim": "#4ae183",
+              "primary": "#b8c3ff",
+              "on-primary-container": "#efefff",
+              "on-error": "#690005",
+              "on-background": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#713700",
+              "on-primary": "#002388",
+              "outline": "#8e90a2",
+              "primary-container": "#2e5bff",
+              "inverse-primary": "#124af0",
+              "error": "#ffb4ab",
+              "surface-tint": "#b8c3ff",
+              "background": "#131313",
+              "surface-bright": "#393939",
+              "tertiary-fixed": "#ffdcc5",
+              "on-primary-fixed": "#001356",
+              "secondary-fixed": "#6bfe9c",
+              "surface-variant": "#353534",
+              "tertiary": "#ffb783",
+              "on-secondary-fixed-variant": "#005228",
+              "inverse-on-surface": "#313030",
+              "surface-container-highest": "#353534",
+              "primary-fixed": "#dde1ff",
+              "tertiary-container": "#aa5600",
+              "on-tertiary-fixed": "#301400",
+              "surface-container-high": "#2a2a2a",
+              "surface-container-low": "#1c1b1b",
+              "surface-container": "#201f1f",
+              "secondary-container": "#06bb63",
+              "secondary": "#4ae183",
+              "outline-variant": "#434656",
+              "on-secondary-container": "#00431f",
+              "on-primary-fixed-variant": "#0035be",
+              "on-tertiary": "#4f2500",
+              "tertiary-fixed-dim": "#ffb783",
+              "surface": "#131313",
+              "primary-fixed-dim": "#b8c3ff",
+              "inverse-surface": "#e5e2e1",
+              "surface-dim": "#131313",
+              "on-surface-variant": "#c4c5d9",
+              "on-tertiary-container": "#ffece2",
+              "surface-container-lowest": "#0e0e0e",
+              "on-surface": "#e5e2e1",
+              "on-secondary-fixed": "#00210c",
+              "on-error-container": "#ffdad6",
+              "on-secondary": "#003919",
+              "error-container": "#93000a"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="dark overflow-x-hidden">
+<!-- TopNavBar Shell -->
+<nav class="w-full top-0 sticky z-50 bg-[#131313] dark:bg-[#131313] flex items-center justify-between px-6 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-[#b8c3ff] font-black tracking-tighter text-2xl">SQL Editor</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#8e90a2] hover:text-white transition-colors font-['Manrope'] font-bold text-lg tracking-tight" href="#">Editor</a>
+<a class="text-[#8e90a2] hover:text-white transition-colors font-['Manrope'] font-bold text-lg tracking-tight" href="#">Dashboard</a>
+<a class="text-[#8e90a2] hover:text-white transition-colors font-['Manrope'] font-bold text-lg tracking-tight" href="#">Projects</a>
+<a class="text-[#b8c3ff] border-b-2 border-[#b8c3ff] pb-1 font-['Manrope'] font-bold text-lg tracking-tight" href="#">Settings</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#8e90a2] hover:bg-[#1c1b1b] transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-[#8e90a2] hover:bg-[#1c1b1b] transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img alt="User profile avatar" data-alt="User profile avatar circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZIj_QnNaWZJ0OhsUo4Mj4AzYPW9H3fdjVWRDVtnJBJIFpo-CZPTVJAqGwCf6TRoKUFiODriuygYXl7-s61BhsAz6DYch74J6QTKQkoMSKdDm005DWcErg3nv2N_o8fuSGNDuLmrQX5IjsnrlsflcFjAkKjxLcORGfwsHDyb7XJCSM2krvYl2UA_jskqDmVLT1ZIvMEf9RnyFQqpq9gULTmwCR46XtaWkBWpzAHJGris7o8NVh9nWQ7vE9OpLtSU4DfdzfLOuG8eZm"/>
+</div>
+</div>
+</nav>
+<div class="bg-[#1c1b1b] h-[1px] w-full"></div>
+<div class="flex min-h-[calc(100vh-65px)]">
+<!-- SideNavBar Shell -->
+<aside class="hidden md:flex flex-col gap-2 p-4 w-64 bg-[#0e0e0e] dark:bg-[#0e0e0e] h-[calc(100vh-65px)] sticky top-16">
+<div class="mb-6 px-2">
+<h2 class="text-[#b8c3ff] font-bold font-['Inter'] text-sm uppercase tracking-widest opacity-80">Account</h2>
+<p class="text-[#8e90a2] text-xs font-['Inter']">Manage your workspace</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="bg-[#1c1b1b] text-[#b8c3ff] rounded-sm flex items-center gap-3 p-3 font-['Inter'] text-sm font-medium transition-transform active:translate-x-1" href="#">
+<span class="material-symbols-outlined">person</span>
+                    Profile
+                </a>
+<a class="text-[#8e90a2] hover:bg-[#131313] flex items-center gap-3 p-3 font-['Inter'] text-sm font-medium transition-transform active:translate-x-1" href="#">
+<span class="material-symbols-outlined">shield</span>
+                    Security
+                </a>
+<a class="text-[#8e90a2] hover:bg-[#131313] flex items-center gap-3 p-3 font-['Inter'] text-sm font-medium transition-transform active:translate-x-1" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Billing
+                </a>
+<a class="text-[#8e90a2] hover:bg-[#131313] flex items-center gap-3 p-3 font-['Inter'] text-sm font-medium transition-transform active:translate-x-1" href="#">
+<span class="material-symbols-outlined">key</span>
+                    API Keys
+                </a>
+<a class="text-[#8e90a2] hover:bg-[#131313] flex items-center gap-3 p-3 font-['Inter'] text-sm font-medium transition-transform active:translate-x-1" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+                    Preferences
+                </a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 bg-[#131313] p-8 md:p-12 lg:p-16 max-w-6xl">
+<!-- Header Section -->
+<header class="mb-12">
+<h1 class="font-headline font-extrabold text-4xl tracking-tight text-on-surface mb-2">User Profile</h1>
+<p class="font-body text-outline text-lg">Update your identity and manage your personal preferences.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Identity & Form -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Profile Overview Card -->
+<section class="flex flex-col md:flex-row items-start md:items-center gap-8 bg-surface-container-low p-8 rounded-xl relative overflow-hidden">
+<div class="relative group">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-surface-container-highest ring-2 ring-primary/20">
+<img alt="Profile avatar large" class="w-full h-full object-cover" data-alt="Large user avatar preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTQoaocxmdG21TJ1huvkKN_fosfmFWBticuXbp5m0Jx5Hft5rMvzKFgmcrrxQboQnE7OhDABnEkMu7nOdZrXpYbtkgcbRrAqMalgwsf3rFmDtQnoMUpwfur41vCOWEtp-Fh7CKFuokdO9wMAadlmG0adSl4-AFccamsXhzNW-KITuCuMHBtMpxAzLmybMEG2bGw47Q4Z-Tevn4BFdOS73DmVm5C3-N3IyldgqbMEhblmDEXetcSDZ4SJD36sVoJ_79nNkMSXrnI6_T"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<div class="flex-1">
+<h3 class="font-headline font-bold text-2xl text-on-surface">Alex Rivera</h3>
+<p class="font-label text-secondary text-sm tracking-wider uppercase">Senior Data Architect</p>
+<p class="font-body text-outline mt-1">alex.rivera@monolith.io</p>
+<div class="mt-4 flex gap-3">
+<span class="px-2 py-1 bg-surface-container-highest text-xs font-label text-on-surface-variant rounded">Admin</span>
+<span class="px-2 py-1 bg-surface-container-highest text-xs font-label text-on-surface-variant rounded">Production Access</span>
+</div>
+</div>
+</section>
+<!-- Personal Information Form -->
+<section>
+<h2 class="font-headline font-bold text-xl mb-6 text-on-surface flex items-center gap-2">
+<span class="w-1 h-6 bg-primary"></span>
+                            Personal Information
+                        </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-outline">First Name</label>
+<input class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/40 text-on-surface py-3 px-4 rounded-sm font-body transition-all" type="text" value="Alex"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-outline">Last Name</label>
+<input class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/40 text-on-surface py-3 px-4 rounded-sm font-body transition-all" type="text" value="Rivera"/>
+</div>
+<div class="md:col-span-2 space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-outline">Organization</label>
+<input class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/40 text-on-surface py-3 px-4 rounded-sm font-body transition-all" type="text" value="Monolith Data Systems"/>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="px-8 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-sm shadow-xl active:scale-95 transition-all">
+                                Update Information
+                            </button>
+</div>
+</section>
+<!-- Security Section -->
+<section class="border-t border-outline-variant/10 pt-12">
+<h2 class="font-headline font-bold text-xl mb-6 text-on-surface flex items-center gap-2">
+<span class="w-1 h-6 bg-error"></span>
+                            Security &amp; Access
+                        </h2>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-6 bg-surface-container-low rounded-xl">
+<div>
+<p class="font-bold text-on-surface">Change Password</p>
+<p class="text-sm text-outline">Last updated 3 months ago</p>
+</div>
+<button class="px-4 py-2 border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors rounded-sm text-sm">Update</button>
+</div>
+<div class="flex items-center justify-between p-6 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-secondary/10 rounded-full">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Two-Factor Authentication</p>
+<p class="text-sm text-secondary">Currently Enabled</p>
+</div>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Preferences & Integrations -->
+<div class="lg:col-span-4 space-y-12">
+<!-- Preferences Card -->
+<section class="p-8 bg-surface-container-low rounded-xl border-l-4 border-primary">
+<h2 class="font-headline font-bold text-lg mb-6 text-on-surface">Preferences</h2>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-outline">Theme Appearance</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="bg-surface-container-highest text-primary border border-primary/40 py-2 rounded-sm text-xs font-bold">Dark</button>
+<button class="bg-surface-container-lowest text-outline border border-outline-variant/20 py-2 rounded-sm text-xs font-bold">Light</button>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-outline">Default SQL Dialect</label>
+<select class="w-full bg-surface-container-highest border-none text-on-surface text-sm py-3 px-4 rounded-sm focus:ring-2 focus:ring-primary/40 transition-all font-body appearance-none">
+<option>PostgreSQL</option>
+<option>MySQL</option>
+<option>Snowflake</option>
+<option>BigQuery</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-outline">Interface Language</label>
+<select class="w-full bg-surface-container-highest border-none text-on-surface text-sm py-3 px-4 rounded-sm focus:ring-2 focus:ring-primary/40 transition-all font-body appearance-none">
+<option>English (US)</option>
+<option>German</option>
+<option>Japanese</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Connected Accounts -->
+<section class="space-y-4">
+<h2 class="font-headline font-bold text-lg text-on-surface px-2">Integrations</h2>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded border border-outline-variant/10 hover:border-outline-variant/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 flex items-center justify-center bg-white rounded-full">
+<img alt="GitHub" class="w-5 h-5" data-alt="GitHub logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEpmB60MI53WbmsGMpPQm9DFtPr4zfMLm797lPRgM4f1O9K2ePJdDQmxy-nyNWihNbdf6JlN3jeJCmvHWycHSnLLm7cjrX0yD0tnfvIJWt3Ok4aOL1HcsDuMgyT7w6cYUW26uDVBNpw1sZwtSpJQMiCnxVYegIOD6TsLORf2tNcS8WyiGnUetlp6ddVIAIUBguHAJZblZGDaUox7l6QOQ9xHpwuZsqWyY1BvqnnxkbglkNnsZ7bebQY5KXGKjCPvQan-isDbJq_cwt"/>
+</div>
+<span class="font-body text-sm font-medium">GitHub</span>
+</div>
+<span class="text-secondary text-xs font-label">Connected</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded border border-outline-variant/10 hover:border-outline-variant/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 flex items-center justify-center bg-white rounded-full">
+<img alt="Google" class="w-5 h-5" data-alt="Google logo" g\"_logo.svg"="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXQ8zv5ylADVaT2Rb5rChS_vbPg__eV5saoaTrwQJVZPTni83h4nKVocKZdwh8M7knA6eAj64uOcDdIJgQ_Zg0Gfk31T8m6IQ1woMITSaP4OpFMOpzced8FzG25KlrXuvCdXUIMztPdRAthzxTT63h2k3krdiGKXFaSdiITAVDcuufOMe835OCsg_qeVRfIyjJ0hOT4mb3UtqVQl35UsBEiuUAOJlh7BmjBZR5g-O-0ha0EhTbZVIhPMv_q1BgZuPemxHUL2yNu-6u"/>
+</div>
+<span class="font-body text-sm font-medium">Google</span>
+</div>
+<button class="text-primary text-xs font-label hover:underline">Connect</button>
+</div>
+</div>
+</section>
+<!-- Advanced Tooltip/Hint Box -->
+<div class="p-6 bg-surface-bright/10 border border-outline-variant/20 rounded-xl">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">info</span>
+<p class="text-xs font-body leading-relaxed text-outline">
+                                Your data is protected using AES-256 encryption. Integrated accounts are used only for authentication and repository syncing.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation Shell -->
+<div class="md:hidden fixed bottom-0 w-full bg-surface-container shadow-2xl flex justify-around items-center h-16 border-t border-outline-variant/10">
+<button class="flex flex-col items-center gap-1 text-outline">
+<span class="material-symbols-outlined">database</span>
+<span class="text-[10px] font-label">Editor</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-outline">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label">Dash</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-label">Profile</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-outline">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-label">Settings</span>
+</button>
+</div>
+</body></html>

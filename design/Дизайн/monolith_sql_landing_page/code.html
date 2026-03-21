@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Monolith SQL | Precision Querying for Modern Data Teams</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Fira+Code:wght@400;500&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffdad6",
+              "on-background": "#e5e2e1",
+              "outline-variant": "#434656",
+              "tertiary-fixed": "#ffdcc5",
+              "on-primary-fixed": "#001356",
+              "on-tertiary-fixed-variant": "#713700",
+              "tertiary-fixed-dim": "#ffb783",
+              "on-primary": "#002388",
+              "surface-container-highest": "#353534",
+              "on-secondary-fixed-variant": "#005228",
+              "outline": "#8e90a2",
+              "tertiary": "#ffb783",
+              "on-tertiary-container": "#ffece2",
+              "on-secondary": "#003919",
+              "primary-container": "#2e5bff",
+              "secondary-fixed": "#6bfe9c",
+              "secondary-container": "#06bb63",
+              "surface-tint": "#b8c3ff",
+              "inverse-primary": "#124af0",
+              "background": "#131313",
+              "on-primary-container": "#efefff",
+              "on-tertiary": "#4f2500",
+              "primary-fixed": "#dde1ff",
+              "on-primary-fixed-variant": "#0035be",
+              "surface-dim": "#131313",
+              "on-secondary-fixed": "#00210c",
+              "primary-fixed-dim": "#b8c3ff",
+              "secondary-fixed-dim": "#4ae183",
+              "surface-container": "#201f1f",
+              "on-surface-variant": "#c4c5d9",
+              "error-container": "#93000a",
+              "surface-container-low": "#1c1b1b",
+              "surface-container-high": "#2a2a2a",
+              "on-tertiary-fixed": "#301400",
+              "inverse-surface": "#e5e2e1",
+              "on-secondary-container": "#00431f",
+              "on-error": "#690005",
+              "tertiary-container": "#aa5600",
+              "secondary": "#4ae183",
+              "inverse-on-surface": "#313030",
+              "surface-variant": "#353534",
+              "error": "#ffb4ab",
+              "surface": "#131313",
+              "surface-container-lowest": "#0e0e0e",
+              "surface-bright": "#393939",
+              "primary": "#b8c3ff",
+              "on-surface": "#e5e2e1"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Space Grotesk"],
+              "code": ["Fira Code"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(53, 53, 52, 0.8);
+        backdrop-filter: blur(20px);
+      }
+      .sql-gradient-text {
+        background: linear-gradient(135deg, #b8c3ff 0%, #2e5bff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .brutalist-button {
+        background: linear-gradient(135deg, #b8c3ff 0%, #2e5bff 100%);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-[#0e0e0e]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#b8c3ff] font-headline">Monolith SQL</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-body text-sm text-slate-400 hover:text-slate-200 transition-colors" href="#">Features</a>
+<a class="font-body text-sm text-slate-400 hover:text-slate-200 transition-colors" href="#">How it Works</a>
+<a class="font-body text-sm text-slate-400 hover:text-slate-200 transition-colors" href="#">Testimonials</a>
+<a class="font-body text-sm text-slate-400 hover:text-slate-200 transition-colors" href="#">Pricing</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-body text-sm text-slate-400 hover:text-slate-200 transition-colors">Log In</button>
+<button class="brutalist-button text-on-primary-container px-4 py-2 rounded-lg font-body text-sm font-bold transition-all active:scale-95 duration-100">Start Querying</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-8">
+<!-- Hero Section -->
+<section class="max-w-6xl mx-auto mb-32 flex flex-col items-center text-center">
+<div class="mb-6 inline-flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full border border-white/5">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary">V2.0 Engine Live</span>
+</div>
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tight mb-8 max-w-4xl">
+                Precision Querying for <span class="sql-gradient-text">Modern Data Teams</span>.
+            </h1>
+<p class="font-body text-lg text-outline max-w-2xl mb-12">
+                The high-fidelity SQL interface engineered for organic brutalism. Manage your Postgres, MySQL, and SQLite instances with editorial precision.
+            </p>
+<div class="flex gap-4 mb-20">
+<button class="brutalist-button text-on-primary-container px-8 py-4 rounded-lg font-headline font-bold text-lg hover:brightness-110 transition-all">Get Started Free</button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-on-surface px-8 py-4 rounded-lg font-headline font-bold text-lg border border-white/5 transition-all">Request Demo</button>
+</div>
+<!-- SQL Editor Screenshot -->
+<div class="w-full relative rounded-xl overflow-hidden border border-white/5 shadow-2xl bg-surface-container-lowest">
+<div class="h-8 bg-surface-container-low w-full flex items-center px-4 gap-2">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary/40"></div>
+<div class="w-3 h-3 rounded-full bg-secondary/40"></div>
+<div class="ml-4 px-3 py-1 bg-surface-container-highest rounded text-[10px] font-label text-outline">query_analytics_v4.sql</div>
+</div>
+<img class="w-full h-auto opacity-90" data-alt="Dark themed professional code editor interface screenshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQVjrR1cR_a8f3yMV_QNNbr7Gc-QrBtnPV3kpSD6cxuujOKxFNK40yawXTry5-9jyE5cPIgfmU5lpIaaAjeEH4YDFPHrlyEoIe3YdtD7HSpjtTt0qo8rUbO_1rCnX0eOkCMqo4qFg0miV1IlnwgefwpmdGgkHrxgvuzI9_zBvOR1RnJuh85YnSs7muiatTNqw6CXFpWwMIlitcKyCWftwfWurL33HWtHu5h_NSnFNoEbErTWXc5m1ZFK2FObHiLpKkIprHFjU_bkBm"/>
+<!-- Overlay Shadow -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none"></div>
+</div>
+</section>
+<!-- Bento Features Grid -->
+<section class="max-w-6xl mx-auto mb-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Big Feature -->
+<div class="md:col-span-8 bg-surface-container-low p-12 rounded-xl border border-white/5 flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-primary mb-6 text-4xl">tabs</span>
+<h3 class="font-headline text-3xl font-bold mb-4">Multi-Tab Editor</h3>
+<p class="font-body text-outline max-w-md">Orchestrate complex migrations across multiple tabs. Native context switching that remembers your scroll position and local state.</p>
+</div>
+<div class="mt-12 flex gap-4">
+<div class="px-4 py-2 bg-surface-container-highest rounded-lg font-label text-xs uppercase tracking-tighter">Postgres</div>
+<div class="px-4 py-2 bg-surface-container-highest rounded-lg font-label text-xs uppercase tracking-tighter">MySQL</div>
+<div class="px-4 py-2 bg-surface-container-highest rounded-lg font-label text-xs uppercase tracking-tighter">SQLite</div>
+</div>
+</div>
+<!-- Vertical Performance Feature -->
+<div class="md:col-span-4 bg-surface-container-lowest p-12 rounded-xl border border-white/5 flex flex-col items-center justify-center text-center">
+<div class="mb-6">
+<span class="font-headline text-6xl font-extrabold text-secondary">&lt;3s</span>
+<p class="font-label text-xs uppercase tracking-widest text-outline mt-2">Load Performance</p>
+</div>
+<h3 class="font-headline text-xl font-bold mb-2">Massive Datasets</h3>
+<p class="font-body text-sm text-outline">Effortlessly scroll through 10,000+ rows without a single frame drop. Virtualized rendering for the elite.</p>
+</div>
+<!-- Collaborative Feature -->
+<div class="md:col-span-4 bg-surface-container-low p-12 rounded-xl border border-white/5">
+<span class="material-symbols-outlined text-tertiary mb-6 text-4xl">group</span>
+<h3 class="font-headline text-xl font-bold mb-4">Real-time Collab</h3>
+<p class="font-body text-sm text-outline">Share live queries with teammates. Pair program on complex joins in real-time with cursor presence.</p>
+</div>
+<!-- Security Feature -->
+<div class="md:col-span-8 bg-surface-container-low p-12 rounded-xl border border-white/5 flex items-center justify-between gap-8">
+<div class="max-w-md">
+<span class="material-symbols-outlined text-secondary mb-6 text-4xl">verified_user</span>
+<h3 class="font-headline text-xl font-bold mb-4">Advanced Security</h3>
+<p class="font-body text-sm text-outline">Full audit logs for every query executed. Role-based access control integrated with your SSO of choice.</p>
+</div>
+<div class="hidden lg:block w-48 h-48 bg-surface-container-highest rounded-full border border-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-6xl">key</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Code Snippet Section -->
+<section class="max-w-4xl mx-auto mb-32">
+<div class="text-center mb-12">
+<h2 class="font-headline text-3xl font-bold mb-4">Sophisticated Syntax</h2>
+<p class="font-body text-outline">The Command is the hero. Optimized for visual clarity and long-form querying.</p>
+</div>
+<div class="bg-[#131313] p-8 rounded-xl border border-white/10 shadow-inner font-code text-sm leading-relaxed overflow-x-auto">
+<div class="flex flex-col gap-1">
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">1</span>
+<span><span class="text-primary">SELECT</span> users.id, profiles.bio, <span class="text-tertiary">COUNT</span>(orders.id) <span class="text-primary">AS</span> total_orders</span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">2</span>
+<span><span class="text-primary">FROM</span> users</span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">3</span>
+<span><span class="text-primary">LEFT JOIN</span> profiles <span class="text-primary">ON</span> profiles.user_id = users.id</span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">4</span>
+<span><span class="text-primary">JOIN</span> orders <span class="text-primary">ON</span> orders.user_id = users.id</span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">5</span>
+<span><span class="text-primary">WHERE</span> orders.status = <span class="text-secondary">'completed'</span></span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">6</span>
+<span><span class="text-primary">AND</span> orders.amount &gt; <span class="text-tertiary">500</span></span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">7</span>
+<span class="text-outline"><span class="material-symbols-outlined text-[12px] align-middle">subdirectory_arrow_right</span> -- Calculate high-value segment filtering</span>
+</div>
+<div class="flex gap-4">
+<span class="text-outline/40 w-4 select-none">8</span>
+<span><span class="text-primary">GROUP BY</span> users.id, profiles.bio;</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="max-w-6xl mx-auto mb-32">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="p-8 bg-surface-container-low rounded-lg border border-white/5">
+<p class="font-body text-on-surface mb-8 italic">"The editorial approach to data sets Monolith apart. It's the only SQL editor that actually helps me focus on the logic rather than the chrome."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">SC</div>
+<div>
+<p class="font-headline font-bold text-sm">Sarah Chen</p>
+<p class="font-label text-[10px] text-outline uppercase tracking-widest">Senior Data Engineer, Vercel</p>
+</div>
+</div>
+</div>
+<div class="p-8 bg-surface-container-low rounded-lg border border-white/5">
+<p class="font-body text-on-surface mb-8 italic">"Finally, a tool that respects the performance requirements of massive tables. We saw immediate productivity gains across our entire team."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center font-bold text-secondary">MK</div>
+<div>
+<p class="font-headline font-bold text-sm">Marcus Kael</p>
+<p class="font-label text-[10px] text-outline uppercase tracking-widest">Principal Architect, Stripe</p>
+</div>
+</div>
+</div>
+<div class="p-8 bg-surface-container-low rounded-lg border border-white/5">
+<p class="font-body text-on-surface mb-8 italic">"The UI is a breath of fresh air. No clutter, just the Monolith. It feels like a premium workspace designed for adults."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary/20 flex items-center justify-center font-bold text-tertiary">JL</div>
+<div>
+<p class="font-headline font-bold text-sm">Jessica Low</p>
+<p class="font-label text-[10px] text-outline uppercase tracking-widest">Analytics Lead, Figma</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Section -->
+<section class="max-w-6xl mx-auto mb-32">
+<div class="text-center mb-16">
+<h2 class="font-headline text-4xl font-extrabold mb-4">Scalable Infrastructure</h2>
+<p class="font-body text-outline">Join 10,000+ data professionals building the future.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 rounded-2xl overflow-hidden border border-white/5">
+<!-- Community -->
+<div class="bg-surface p-12 flex flex-col justify-between">
+<div>
+<h4 class="font-headline text-lg font-bold mb-2">Community</h4>
+<div class="mb-8">
+<span class="text-4xl font-extrabold">$0</span>
+<span class="text-outline text-sm">/ forever</span>
+</div>
+<ul class="space-y-4 mb-12">
+<li class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Single Database Connection
+                            </li>
+<li class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Community Support
+                            </li>
+<li class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Core Editor Features
+                            </li>
+</ul>
+</div>
+<button class="w-full py-3 rounded-lg border border-white/10 hover:bg-surface-container-high transition-all font-bold">Current Plan</button>
+</div>
+<!-- Professional -->
+<div class="bg-surface-container-low p-12 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-4 right-4 px-2 py-1 bg-primary/20 text-primary text-[10px] font-label rounded uppercase tracking-tighter font-bold">Most Popular</div>
+<div>
+<h4 class="font-headline text-lg font-bold mb-2">Professional</h4>
+<div class="mb-8">
+<span class="text-4xl font-extrabold">$24</span>
+<span class="text-outline text-sm">/ user / mo</span>
+</div>
+<ul class="space-y-4 mb-12">
+<li class="flex items-center gap-2 text-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Unlimited Connections
+                            </li>
+<li class="flex items-center gap-2 text-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Team Collaboration
+                            </li>
+<li class="flex items-center gap-2 text-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Version Control Integration
+                            </li>
+</ul>
+</div>
+<button class="w-full brutalist-button py-3 rounded-lg text-on-primary-container font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02]">Get Started</button>
+</div>
+<!-- Enterprise -->
+<div class="bg-surface p-12 flex flex-col justify-between">
+<div>
+<h4 class="font-headline text-lg font-bold mb-2">Enterprise</h4>
+<div class="mb-8">
+<span class="text-4xl font-extrabold">Custom</span>
+</div>
+<ul class="space-y-4 mb-12">
+<li class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Audit Log &amp; Compliance
+                            </li>
+<li class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                SSO &amp; Advanced RBAC
+                            </li>
+<li class="flex items-center gap-2 text-sm text-outline">
+<span class="material-symbols-outlined text-secondary text-sm">check</span>
+                                Dedicated Support
+                            </li>
+</ul>
+</div>
+<button class="w-full py-3 rounded-lg border border-white/10 hover:bg-surface-container-high transition-all font-bold">Contact Sales</button>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="max-w-6xl mx-auto mb-32">
+<div class="bg-primary/5 rounded-3xl p-16 border border-primary/10 text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+<h2 class="font-headline text-4xl font-extrabold mb-6 relative z-10">Ready to query with precision?</h2>
+<p class="font-body text-outline mb-10 max-w-xl mx-auto relative z-10">Join the elite data teams who have made the switch to the Monolith SQL environment.</p>
+<div class="flex justify-center gap-4 relative z-10">
+<button class="brutalist-button text-on-primary-container px-10 py-4 rounded-lg font-headline font-bold text-lg">Start Querying Now</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/10 bg-[#0e0e0e]">
+<div class="flex flex-col gap-2">
+<span class="font-headline font-bold text-[#b8c3ff]">Monolith SQL</span>
+<p class="font-body text-[10px] text-slate-500 tracking-wide uppercase">© 2024 Monolith SQL. Engineered for Organic Brutalism.</p>
+</div>
+<div class="flex gap-6 items-center">
+<a class="font-body text-xs tracking-wide uppercase text-slate-500 hover:text-white transition-colors" href="#">Documentation</a>
+<a class="font-body text-xs tracking-wide uppercase text-slate-500 hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="font-body text-xs tracking-wide uppercase text-slate-500 hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="font-body text-xs tracking-wide uppercase text-slate-500 hover:text-white transition-colors" href="#">Github</a>
+<a class="font-body text-xs tracking-wide uppercase text-slate-500 hover:text-white transition-colors" href="#">Status</a>
+</div>
+</footer>
+</body></html>

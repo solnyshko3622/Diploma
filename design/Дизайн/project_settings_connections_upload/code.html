@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Monolith SQL - Connections</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#393939",
+                        "secondary-fixed": "#6bfe9c",
+                        "tertiary-fixed": "#ffdcc5",
+                        "on-primary-fixed": "#001356",
+                        "surface-container-highest": "#353534",
+                        "tertiary": "#ffb783",
+                        "on-secondary-fixed-variant": "#005228",
+                        "inverse-on-surface": "#313030",
+                        "surface-variant": "#353534",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-container": "#efefff",
+                        "primary": "#b8c3ff",
+                        "secondary-fixed-dim": "#4ae183",
+                        "on-primary": "#002388",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-background": "#e5e2e1",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "primary-container": "#2e5bff",
+                        "inverse-primary": "#124af0",
+                        "outline": "#8e90a2",
+                        "background": "#131313",
+                        "surface-tint": "#b8c3ff",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "surface": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#00210c",
+                        "on-tertiary-container": "#ffece2",
+                        "on-surface-variant": "#c4c5d9",
+                        "surface-dim": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#003919",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-fixed": "#301400",
+                        "tertiary-container": "#aa5600",
+                        "surface-container": "#201f1f",
+                        "secondary-container": "#06bb63",
+                        "surface-container-low": "#1c1b1b",
+                        "outline-variant": "#434656",
+                        "secondary": "#4ae183",
+                        "on-tertiary": "#4f2500",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-secondary-container": "#00431f"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["Fira Code"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #b8c3ff 0%, #2e5bff 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-white">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col h-full w-20 md:w-64 border-r-0 bg-neutral-950">
+<!-- Brand Header -->
+<div class="px-6 py-8 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-xl" style="font-variation-settings: 'FILL' 1;">database</span>
+</div>
+<div class="hidden md:block">
+<h1 class="text-2xl font-bold tracking-tighter text-white font-headline">Monolith</h1>
+<p class="text-[10px] uppercase tracking-widest text-neutral-500 font-label">SQL Editor</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<!-- Active Tab: Connections -->
+<a class="flex items-center gap-4 px-4 py-3 text-blue-400 font-bold border-r-2 border-blue-400 bg-neutral-900/50 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="hidden md:block font-body">Connections</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800/50 transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="hidden md:block font-body">Team</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800/50 transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="hidden md:block font-body">Security</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800/50 transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="hidden md:block font-body">Editor</span>
+</a>
+</nav>
+<!-- Bottom Actions -->
+<div class="p-4 border-t border-white/5">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="User profile avatar illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiC2UeLeY6iVSLlGXg7u1U0Te9tWiwL3HsRud0o303DFoY_UV9EErOFHZHdn9DcvlmyQD_tKMm9_LrTejJuOXRX-FFJGWWRVaUNtYtycUo3Qr2qc0bCRvyCRuVeBWL8J7Wdd8cg9Xp0nIlBEPKZHEWE_Dl-j3u4yEagmnL_agfaGrqz_PkBD64ydUkYT2J3G1BNsPCs9JO76rXk92HkhTcILLgOPZbsERoMG5xlPWXdfgVXhx6HIu_Q18xWnBi4dQ7TM4q1eQlpasa"/>
+</div>
+<div class="hidden md:block">
+<p class="text-xs font-semibold text-white">Alex Rivera</p>
+<p class="text-[10px] text-neutral-500 font-label">Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 right-0 left-0 md:left-64 z-30 flex items-center justify-between px-6 h-16 bg-neutral-900">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">search</span>
+<input class="w-full bg-surface border-none rounded-lg pl-10 pr-4 py-2 text-sm text-on-surface placeholder:text-neutral-600 focus:ring-1 focus:ring-primary-container transition-all" placeholder="Search connections..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-neutral-400 hover:text-white transition-colors scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-neutral-400 hover:text-white transition-colors scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-20 md:ml-64 pt-16 min-h-screen bg-surface">
+<div class="max-w-6xl mx-auto px-6 py-12 md:px-12">
+<!-- Header Section -->
+<section class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="text-4xl md:text-5xl font-extrabold tracking-tight font-headline text-white mb-2">Connections</h2>
+<p class="text-neutral-400 max-w-xl text-lg font-body">Manage your secure database tunnels and cloud credentials.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-6 py-3 bg-white/5 border border-white/10 text-on-surface font-semibold rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 group">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+<span>Upload Database</span>
+</button>
+<button class="px-6 py-3 btn-gradient text-on-primary font-bold rounded-lg shadow-xl shadow-primary-container/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span>New Connection</span>
+</button>
+</div>
+</section>
+<!-- File Format Info (Subtle) -->
+<div class="mb-8 flex items-center gap-4 text-[10px] font-label tracking-widest text-neutral-500 uppercase">
+<span>Accepted formats:</span>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-neutral-800 rounded">.sql</span>
+<span class="px-2 py-0.5 bg-neutral-800 rounded">.csv</span>
+<span class="px-2 py-0.5 bg-neutral-800 rounded">.sqlite</span>
+</div>
+</div>
+<!-- Connections Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Connection Card 01 -->
+<div class="group relative bg-surface-container-low p-8 rounded-xl overflow-hidden transition-all hover:bg-surface-container hover:shadow-2xl shadow-black/50">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-8">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[10px] font-label uppercase tracking-widest text-secondary font-bold">Active</span>
+</div>
+<h3 class="text-2xl font-bold font-headline text-white">PROD_DB_01</h3>
+<p class="font-label text-sm text-neutral-500">PostgreSQL • aws-east-1.monolith.db</p>
+</div>
+<div class="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<img alt="PostgreSQL Logo" class="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity" data-alt="PostgreSQL brand icon logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIaW5_XzNBztQf4Dgi40fOfXYK08NdGkoZU8zpVmH0u96JhSenjkAP_qXJaVQbFHshj3iE-vWcN0YmIiDMZzYQ7gGCcYqgaPWk-MLY15D1akFvfSBR4NxVJZw0qtMrjYXOEQJLIOdteXySpvQWjvZg0mLlPnV9wsgRc0KnCg4SnColKfAmJtPtOSHi7WHYG8R-LuJr3oLas9JkADoVeSlWscjeThLjDenDSCigIqVWOOrZizGs0GakOlz3-hCwbdeZbspWF-BmyF5b"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-auto">
+<button class="flex flex-col items-center justify-center py-4 rounded-lg bg-surface-container-highest hover:bg-primary-container/20 hover:text-primary transition-all gap-1">
+<span class="material-symbols-outlined text-xl">bolt</span>
+<span class="text-[10px] font-label font-bold uppercase">Test</span>
+</button>
+<button class="flex flex-col items-center justify-center py-4 rounded-lg bg-surface-container-highest hover:bg-white/10 transition-all gap-1">
+<span class="material-symbols-outlined text-xl">edit</span>
+<span class="text-[10px] font-label font-bold uppercase">Edit</span>
+</button>
+<button class="flex flex-col items-center justify-center py-4 rounded-lg bg-surface-container-highest hover:bg-white/10 transition-all gap-1">
+<span class="material-symbols-outlined text-xl">share</span>
+<span class="text-[10px] font-label font-bold uppercase">Share</span>
+</button>
+</div>
+</div>
+<!-- Connection Card 02 -->
+<div class="group relative bg-surface-container-low p-8 rounded-xl overflow-hidden transition-all hover:bg-surface-container hover:shadow-2xl shadow-black/50">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-8">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[10px] font-label uppercase tracking-widest text-secondary font-bold">Active</span>
+</div>
+<h3 class="text-2xl font-bold font-headline text-white">TEST_SANDBOX</h3>
+<p class="font-label text-sm text-neutral-500">SQLite • local_sandbox_v2.sqlite</p>
+</div>
+<div class="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<img alt="SQLite Logo" class="w-8 h-8 opacity-80 group-hover:opacity-100 transition-opacity" data-alt="SQLite brand icon logo simplified" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNkGNwRIdeIVRK94cYwOTnlriw_GXFFOTMfRNl27H-WhNda1YdvyHFOrPT0iC4sYdxETiEwuB87CGutlcIKFwUG8BMlVeX2Etdpc3G8q2wARbOgWqYEoTiK9snXLBi5IgT7eDGMfa3sjF73iyf0C9aWUbfY_fg_0txKxBMkPJsMbKjMDeoN3YBKSUm4Un5LU-EwFFVLA_1lZGQQtIbSSP3Z37kILdNixkJkcGGC0PPVErcaDlUqqMsSpc2jcqrGuT0XdqW2MEgaOC3"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-auto">
+<button class="flex flex-col items-center justify-center py-4 rounded-lg bg-surface-container-highest hover:bg-primary-container/20 hover:text-primary transition-all gap-1">
+<span class="material-symbols-outlined text-xl">bolt</span>
+<span class="text-[10px] font-label font-bold uppercase">Test</span>
+</button>
+<button class="flex flex-col items-center justify-center py-4 rounded-lg bg-surface-container-highest hover:bg-white/10 transition-all gap-1">
+<span class="material-symbols-outlined text-xl">edit</span>
+<span class="text-[10px] font-label font-bold uppercase">Edit</span>
+</button>
+<button class="flex flex-col items-center justify-center py-4 rounded-lg bg-surface-container-highest hover:bg-white/10 transition-all gap-1">
+<span class="material-symbols-outlined text-xl">share</span>
+<span class="text-[10px] font-label font-bold uppercase">Share</span>
+</button>
+</div>
+</div>
+<!-- Empty State / Add New Placeholder -->
+<div class="border-2 border-dashed border-white/5 rounded-xl flex flex-col items-center justify-center p-12 group hover:border-primary/50 transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-neutral-500 group-hover:text-primary transition-colors">add</span>
+</div>
+<p class="text-sm font-label uppercase tracking-widest text-neutral-600 group-hover:text-primary transition-colors font-bold">Connect another instance</p>
+</div>
+</div>
+<!-- Stats/System Health Section -->
+<section class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="p-6 bg-surface-container-lowest rounded-lg border-l-4 border-secondary/40">
+<p class="text-[10px] font-label uppercase text-neutral-500 mb-2">Tunnel Status</p>
+<div class="flex items-baseline gap-2">
+<h4 class="text-3xl font-bold font-headline text-white">99.9%</h4>
+<span class="text-secondary text-xs font-label">Stable</span>
+</div>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-lg border-l-4 border-primary/40">
+<p class="text-[10px] font-label uppercase text-neutral-500 mb-2">Avg Latency</p>
+<div class="flex items-baseline gap-2">
+<h4 class="text-3xl font-bold font-headline text-white">12ms</h4>
+<span class="text-primary text-xs font-label">Optimized</span>
+</div>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-lg border-l-4 border-error/40">
+<p class="text-[10px] font-label uppercase text-neutral-500 mb-2">Encryption</p>
+<div class="flex items-baseline gap-2">
+<h4 class="text-3xl font-bold font-headline text-white">AES-256</h4>
+<span class="text-error text-xs font-label">Military Grade</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- FAB Suppression Rule Followed: No FAB on Settings/Connections Detail Page -->
+</body></html>

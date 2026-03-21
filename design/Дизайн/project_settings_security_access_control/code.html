@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#393939",
+                        "secondary-fixed": "#6bfe9c",
+                        "tertiary-fixed": "#ffdcc5",
+                        "on-primary-fixed": "#001356",
+                        "surface-container-highest": "#353534",
+                        "tertiary": "#ffb783",
+                        "on-secondary-fixed-variant": "#005228",
+                        "inverse-on-surface": "#313030",
+                        "surface-variant": "#353534",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-container": "#efefff",
+                        "primary": "#b8c3ff",
+                        "secondary-fixed-dim": "#4ae183",
+                        "on-primary": "#002388",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-background": "#e5e2e1",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "primary-container": "#2e5bff",
+                        "inverse-primary": "#124af0",
+                        "outline": "#8e90a2",
+                        "background": "#131313",
+                        "surface-tint": "#b8c3ff",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "surface": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#00210c",
+                        "on-tertiary-container": "#ffece2",
+                        "on-surface-variant": "#c4c5d9",
+                        "surface-dim": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#003919",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-fixed": "#301400",
+                        "tertiary-container": "#aa5600",
+                        "surface-container": "#201f1f",
+                        "secondary-container": "#06bb63",
+                        "surface-container-low": "#1c1b1b",
+                        "outline-variant": "#434656",
+                        "secondary": "#4ae183",
+                        "on-tertiary": "#4f2500",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-secondary-container": "#00431f"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["Fira Code"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col h-full w-20 md:w-64 border-r-0 bg-neutral-950">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-gradient-to-br from-primary to-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">database</span>
+</div>
+<div class="hidden md:block">
+<h1 class="text-2xl font-bold tracking-tighter text-white font-headline">Monolith</h1>
+<p class="text-[10px] uppercase tracking-widest text-neutral-500 font-label">SQL Editor</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center px-3 py-3 gap-4 text-neutral-500 hover:text-neutral-200 transition-colors hover:bg-neutral-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="hidden md:block font-body text-sm">Connections</span>
+</a>
+<a class="flex items-center px-3 py-3 gap-4 text-neutral-500 hover:text-neutral-200 transition-colors hover:bg-neutral-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="hidden md:block font-body text-sm">Team</span>
+</a>
+<!-- Active Tab: Security -->
+<a class="flex items-center px-3 py-3 gap-4 text-blue-400 font-bold border-r-2 border-blue-400 bg-neutral-900/50 group" href="#">
+<span class="material-symbols-outlined" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="hidden md:block font-body text-sm">Security</span>
+</a>
+<a class="flex items-center px-3 py-3 gap-4 text-neutral-500 hover:text-neutral-200 transition-colors hover:bg-neutral-800/50 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="hidden md:block font-body text-sm">Editor</span>
+</a>
+</nav>
+<div class="p-4 border-t border-neutral-900">
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Profile avatar of a technical user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhZaQMPoD0XCPQOSfP12-C2L-L2-12qiPZn9YhNmVgROsOX3iG1L043TcgTWE3_cAIgYEhuw76fbJqU5mTB_N4gNLg2HY_DjdVPucwRnEmJqFPyi9cUr0RYuiA8YIqzRxGjx-647BBRIGZkBPWD1CtvowaUUqG4_D_y4MK5ovJhYrLvK4ZGvPr4xwHU61q-GEvtaXaHmak0PiIZky9E84qyjjzTdejOfyca_eehKVfpE2YGDM8BUKUaNru0n4IiUytSA7Z_cHGL5Sm"/>
+</div>
+<div class="hidden md:block overflow-hidden">
+<p class="text-xs font-semibold truncate">admin_root</p>
+<p class="text-[10px] text-neutral-500 truncate">Production Tier</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="md:ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-0 md:left-64 z-30 flex items-center justify-between px-6 h-16 w-full bg-neutral-900">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm">search</span>
+<input class="bg-neutral-950 border-none text-sm w-full pl-10 pr-4 py-1.5 focus:ring-1 focus:ring-primary rounded-lg placeholder:text-neutral-600 transition-all" placeholder="Search commands or docs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-neutral-400 hover:text-white transition-colors scale-95 active:scale-90 flex items-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-neutral-400 hover:text-white transition-colors scale-95 active:scale-90 flex items-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-6 w-px bg-neutral-800"></div>
+<span class="text-xs font-label tracking-widest text-blue-400 font-semibold uppercase">v2.4.0-Stable</span>
+</div>
+</header>
+<!-- Page Content: Project Settings - Security -->
+<div class="mt-16 p-8 md:p-12 lg:p-16 max-w-6xl mx-auto w-full">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="inline-flex items-center gap-2 mb-4">
+<span class="h-[2px] w-8 bg-primary"></span>
+<span class="text-xs font-label text-primary uppercase tracking-[0.2em]">Safety Protocol</span>
+</div>
+<h1 class="text-4xl md:text-5xl font-headline font-extrabold tracking-tight mb-4">Security &amp; Access Control</h1>
+<p class="text-outline text-lg max-w-2xl font-body leading-relaxed">
+                    Configure execution limits and safety protocols. Ensure your data remain integrity-protected by defining guardrails for all database interactions.
+                </p>
+</header>
+<!-- Settings Grid: Bento Style -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Execution Safety Section -->
+<section class="md:col-span-8 bg-surface-container-low p-8 rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<h2 class="text-xl font-headline font-bold">Execution Safety</h2>
+</div>
+<div class="space-y-8">
+<!-- Toggle: Read-only mode -->
+<div class="flex items-center justify-between group">
+<div class="max-w-md">
+<p class="font-bold text-on-surface mb-1">Read-only mode</p>
+<p class="text-sm text-outline">Disable all INSERT, UPDATE, and DELETE operations globally for this session.</p>
+</div>
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-surface-container-highest transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background">
+<span class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-outline transition-transform"></span>
+</button>
+</div>
+<div class="h-px bg-outline-variant/15"></div>
+<!-- Warning: Dangerous operations -->
+<div class="flex items-start gap-4">
+<div class="flex-1">
+<p class="font-bold text-on-surface mb-1">Dangerous operations warning</p>
+<p class="text-sm text-outline mb-4">Prompt for manual confirmation before executing high-risk keywords.</p>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-error-container/30 text-error font-mono text-[10px] rounded border border-error/20">DROP</span>
+<span class="px-2 py-1 bg-error-container/30 text-error font-mono text-[10px] rounded border border-error/20">DELETE</span>
+<span class="px-2 py-1 bg-error-container/30 text-error font-mono text-[10px] rounded border border-error/20">TRUNCATE</span>
+</div>
+</div>
+<div class="flex items-center h-full">
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-secondary-container transition-colors focus:outline-none">
+<span class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition-transform"></span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Audit Logs Shortcut -->
+<section class="md:col-span-4 bg-surface-container-highest p-8 rounded-xl flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">history_edu</span>
+<span class="material-symbols-outlined text-outline">open_in_new</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-2">Audit Logs</h3>
+<p class="text-sm text-outline mb-6">Track every query execution, connection attempt, and setting change with sub-second precision.</p>
+<a class="mt-auto inline-flex items-center gap-2 text-primary font-label text-sm font-bold group" href="#">
+                        VIEW ACTIVITY LOG
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</section>
+<!-- Limits Section -->
+<section class="md:col-span-5 bg-surface-container-low p-8 rounded-xl">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-tertiary">speed</span>
+<h2 class="text-xl font-headline font-bold">Execution Limits</h2>
+</div>
+<div class="space-y-10">
+<div>
+<div class="flex justify-between mb-3">
+<label class="text-sm font-label uppercase tracking-widest text-outline">Default row limit</label>
+<span class="text-sm font-mono text-tertiary">1,000</span>
+</div>
+<input class="w-full bg-background border-none ring-1 ring-outline-variant/30 focus:ring-primary rounded-lg px-4 py-2 font-mono text-sm" type="text" value="1000"/>
+</div>
+<div>
+<div class="flex justify-between mb-3">
+<label class="text-sm font-label uppercase tracking-widest text-outline">Query timeout</label>
+<span class="text-sm font-mono text-tertiary">30s</span>
+</div>
+<input class="w-full accent-primary h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer" max="300" min="5" type="range" value="30"/>
+<div class="flex justify-between mt-2 text-[10px] text-outline font-label">
+<span>5S</span>
+<span>300S</span>
+</div>
+</div>
+</div>
+</section>
+<!-- IP Whitelisting Section -->
+<section class="md:col-span-7 bg-surface p-8 rounded-xl ring-1 ring-outline-variant/20 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">lan</span>
+<h2 class="text-xl font-headline font-bold">IP Whitelisting</h2>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed px-3 py-1 text-xs font-bold rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                            ADD IP
+                        </button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border-l-2 border-secondary">
+<div>
+<p class="text-sm font-mono text-on-surface">192.168.1.1</p>
+<p class="text-[10px] text-outline font-label uppercase tracking-wider">Office Network (Primary)</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg opacity-60">
+<div>
+<p class="text-sm font-mono text-on-surface">45.23.11.92</p>
+<p class="text-[10px] text-outline font-label uppercase tracking-wider">Staging Relay</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+<div class="p-3 border border-dashed border-outline-variant/30 rounded-lg text-center">
+<p class="text-[10px] text-outline font-label uppercase tracking-widest py-1">All other IPs are currently blocked</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Global Actions -->
+<footer class="mt-12 pt-8 border-t border-outline-variant/10 flex justify-end gap-4">
+<button class="px-6 py-2.5 text-sm font-bold text-outline hover:text-on-surface transition-colors">
+                    Discard Changes
+                </button>
+<button class="px-8 py-2.5 bg-gradient-to-br from-secondary to-secondary-container text-on-secondary-container font-headline font-extrabold text-sm rounded shadow-lg shadow-secondary/10 hover:brightness-110 transition-all">
+                    SAVE SECURITY POLICY
+                </button>
+</footer>
+</div>
+</main>
+<!-- Contextual FAB Suppression: FAB is NOT rendered on this Settings page per instructions -->
+</body></html>

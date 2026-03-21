@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;family=Space+Grotesk:wght@400;500&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sql-editor-glow:focus-within {
+            box-shadow: 0 0 0 2px rgba(184, 195, 255, 0.15);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353534;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #434656;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#00210c",
+                        "on-tertiary-container": "#ffece2",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "on-secondary": "#003919",
+                        "outline": "#8e90a2",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1c1b1b",
+                        "inverse-primary": "#124af0",
+                        "secondary-fixed-dim": "#4ae183",
+                        "surface-tint": "#b8c3ff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#4f2500",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary-container": "#efefff",
+                        "on-surface": "#e5e2e1",
+                        "secondary-fixed": "#6bfe9c",
+                        "secondary-container": "#06bb63",
+                        "on-primary-fixed": "#001356",
+                        "outline-variant": "#434656",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed": "#301400",
+                        "tertiary-container": "#aa5600",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "surface-bright": "#393939",
+                        "tertiary-fixed": "#ffdcc5",
+                        "surface-dim": "#131313",
+                        "on-primary": "#002388",
+                        "tertiary": "#ffb783",
+                        "surface-container-highest": "#353534",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#005228",
+                        "secondary": "#4ae183",
+                        "on-surface-variant": "#c4c5d9",
+                        "error": "#ffb4ab",
+                        "primary": "#b8c3ff",
+                        "on-secondary-container": "#00431f",
+                        "on-background": "#e5e2e1",
+                        "background": "#131313",
+                        "on-primary-fixed-variant": "#0035be",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "primary-container": "#2e5bff",
+                        "primary-fixed": "#dde1ff"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["Fira Code"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="bg-[#131313] dark:bg-[#131313] flex justify-between items-center w-full px-8 py-4 h-16 fixed top-0 z-50">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black tracking-tighter text-[#b8c3ff] uppercase font-headline">MONOLITH_SQL</span>
+<nav class="hidden md:flex items-center gap-6 font-manrope headline-sm font-bold tracking-tight">
+<a class="text-[#b8c3ff] border-b-2 border-[#b8c3ff] pb-1 font-bold" href="#">Editor</a>
+<a class="text-[#8e90a2] hover:text-white transition-colors" href="#">Dashboards</a>
+<a class="text-[#8e90a2] hover:text-white transition-colors" href="#">Collections</a>
+<a class="text-[#8e90a2] hover:text-white transition-colors" href="#">Admin</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-sm border border-white/5">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">database</span>
+<span class="font-label text-xs tracking-wider uppercase text-on-surface-variant">PROD_DB_01</span>
+</div>
+<button class="flex items-center gap-2 bg-gradient-to-br from-secondary to-secondary-container text-on-secondary-container px-4 py-1.5 rounded-sm font-bold hover:brightness-110 transition-all scale-98 active:scale-95">
+<span class="material-symbols-outlined text-lg">play_arrow</span>
+<span class="font-label text-xs tracking-widest uppercase">Run</span>
+</button>
+<div class="flex items-center gap-3 ml-4">
+<span class="material-symbols-outlined text-[#8e90a2] hover:bg-[#1c1b1b] p-2 rounded-full cursor-pointer transition-all">notifications</span>
+<span class="material-symbols-outlined text-[#8e90a2] hover:bg-[#1c1b1b] p-2 rounded-full cursor-pointer transition-all">settings</span>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full border border-outline/20" data-alt="User profile avatar icon with dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6C0c0rxU1XhtOEVSUM2Yb_PtxoT4FQpuM0zsz6yhl3YhA9jjlPYJXeIw_7lE7QSMIcrX7PhJEyWi_3nTThx8_SKLZFXtQguyXu5_VJh2MG9uPlyQC_4fw6EezJ_-BUXaya0mQ5JOdNNqu8xsQVVtpJTOXeknTWDo_NOS-yGnayeX_rfnakQ7Ri78iJvVkXRjsIliBpieyZOdLmnImaGueH1UV4EryB765GnGQdL3867WJYhCZLB60wSWQtCTWn-OuuOnNGNBZEQkb"/>
+</div>
+</div>
+</header>
+<div class="flex pt-16 h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] flex flex-col border-r border-white/5 bg-[#0e0e0e] dark:bg-[#0e0e0e] w-64 z-40 transition-bg-only">
+<div class="p-4 border-b border-white/5">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 bg-surface-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary text-xl">storage</span>
+</div>
+<div>
+<div class="text-sm font-bold text-[#b8c3ff] font-headline">PROD_DB_01</div>
+<div class="text-[10px] text-outline font-label">PostgreSQL 15.4</div>
+</div>
+</div>
+<button class="w-full bg-surface-container-high hover:bg-surface-container-highest text-primary text-xs font-bold py-2 rounded-sm transition-colors font-label tracking-widest uppercase flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span> New Query
+                </button>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1 font-inter body-md tracking-normal">
+<div class="text-[10px] px-3 mb-2 text-outline font-label tracking-[0.2em] uppercase">Navigation</div>
+<a class="flex items-center gap-3 px-3 py-2 text-[#4ae183] bg-[#1c1b1b] rounded-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined text-lg">schema</span> Explorer
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#8e90a2] hover:bg-[#131313] hover:text-white rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">history</span> History
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#8e90a2] hover:bg-[#131313] hover:text-white rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">code_blocks</span> Snippets
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#8e90a2] hover:bg-[#131313] hover:text-white rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">storage</span> Connections
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#8e90a2] hover:bg-[#131313] hover:text-white rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">shield</span> Security
+                </a>
+<div class="text-[10px] px-3 mt-8 mb-2 text-outline font-label tracking-[0.2em] uppercase">Schema</div>
+<details class="group" open="">
+<summary class="flex items-center gap-2 px-3 py-1.5 text-xs text-on-surface-variant cursor-pointer hover:bg-white/5 rounded-sm list-none">
+<span class="material-symbols-outlined text-xs group-open:rotate-90 transition-transform">chevron_right</span>
+<span class="material-symbols-outlined text-sm text-outline">folder</span>
+                        public
+                    </summary>
+<div class="ml-6 mt-1 space-y-1">
+<div class="flex items-center gap-2 px-3 py-1 text-xs text-outline hover:text-on-surface cursor-pointer">
+<span class="material-symbols-outlined text-sm">table_chart</span> users
+                        </div>
+<div class="flex items-center gap-2 px-3 py-1 text-xs text-outline hover:text-on-surface cursor-pointer">
+<span class="material-symbols-outlined text-sm">table_chart</span> transactions
+                        </div>
+<div class="flex items-center gap-2 px-3 py-1 text-xs text-outline hover:text-on-surface cursor-pointer">
+<span class="material-symbols-outlined text-sm">table_chart</span> analytics_logs
+                        </div>
+</div>
+</details>
+</nav>
+<div class="p-4 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#8e90a2] hover:text-white transition-all text-sm" href="#">
+<span class="material-symbols-outlined text-lg">help</span> Docs
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#8e90a2] hover:text-white transition-all text-sm" href="#">
+<span class="material-symbols-outlined text-lg">contact_support</span> Support
+                </a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-64 flex-1 flex flex-col bg-surface overflow-hidden">
+<!-- SQL Editor Area (~60%) -->
+<section class="h-[60%] flex flex-col border-b border-white/5">
+<div class="flex items-center bg-surface-container-lowest px-4 h-10 border-b border-white/5">
+<div class="flex items-center h-full">
+<div class="px-4 h-full flex items-center gap-2 bg-surface text-primary border-t-2 border-primary text-xs font-medium cursor-default">
+<span class="material-symbols-outlined text-sm">article</span>
+                            user_growth_query.sql
+                            <span class="material-symbols-outlined text-xs hover:bg-white/10 rounded-full p-0.5 cursor-pointer">close</span>
+</div>
+<div class="px-4 h-full flex items-center gap-2 text-outline hover:text-on-surface text-xs font-medium cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-sm">article</span>
+                            monthly_revenue.sql
+                        </div>
+<button class="px-3 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="flex-1 bg-surface relative p-6 font-mono text-sm leading-relaxed overflow-auto sql-editor-glow">
+<div class="flex gap-4">
+<div class="text-outline/40 text-right select-none pr-4 border-r border-outline/10 w-10">
+                            1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10
+                        </div>
+<div class="flex-1 outline-none whitespace-pre">
+<span class="text-outline">-- Analysis of monthly active user growth</span>
+<span class="text-primary">SELECT</span>
+<span class="text-on-surface">u.id</span>,
+    <span class="text-on-surface">u.username</span>,
+    <span class="text-primary">COUNT</span>(t.id) <span class="text-primary">AS</span> transaction_count,
+    <span class="text-primary">SUM</span>(t.amount) <span class="text-primary">AS</span> total_spent
+<span class="text-primary">FROM</span> <span class="text-on-surface">users</span> u
+<span class="text-primary">JOIN</span> <span class="text-on-surface">transactions</span> t <span class="text-primary">ON</span> <span class="text-on-surface">u.id = t.user_id</span>
+<span class="text-primary">WHERE</span> <span class="text-on-surface">t.status =</span> <span class="text-secondary">'completed'</span>
+<span class="text-primary">AND</span> <span class="text-on-surface">t.created_at &gt;</span> <span class="text-tertiary">CURRENT_DATE - INTERVAL</span> <span class="text-secondary">'30 days'</span>
+<span class="text-primary">GROUP BY</span> <span class="text-tertiary">1</span>, <span class="text-tertiary">2</span>
+<span class="text-primary">ORDER BY</span> <span class="text-tertiary">4</span> <span class="text-primary">DESC</span>;</div>
+</div>
+<div class="absolute bottom-4 right-8 flex items-center gap-4 text-[10px] font-label text-outline uppercase tracking-widest">
+<span>PostgreSQL</span>
+<span>Ln 8, Col 24</span>
+<span>UTF-8</span>
+</div>
+</div>
+</section>
+<!-- Results Pane (Split Pane) -->
+<section class="h-[40%] flex flex-col bg-surface-container-low">
+<!-- Split Gutter / Header -->
+<div class="h-10 flex items-center justify-between px-6 border-b border-white/5 bg-surface-container-low">
+<div class="flex items-center gap-6">
+<h2 class="font-label text-xs font-bold tracking-[0.2em] uppercase text-on-surface-variant">Query Results</h2>
+<div class="flex items-center gap-4 text-[10px] font-label text-outline uppercase tracking-wider">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">timer</span> 42ms</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">list_alt</span> 1,248 rows</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1 text-[10px] font-label uppercase tracking-widest text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">download</span> Export
+                        </button>
+<button class="flex items-center gap-1 text-[10px] font-label uppercase tracking-widest text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                        </button>
+<button class="text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Table Content -->
+<div class="flex-1 overflow-auto">
+<table class="w-full border-collapse text-left">
+<thead class="sticky top-0 bg-surface-container-low z-10 shadow-sm">
+<tr class="font-label text-[10px] uppercase tracking-[0.1em] text-outline border-b border-white/5">
+<th class="px-6 py-3 font-medium">id</th>
+<th class="px-6 py-3 font-medium">username</th>
+<th class="px-6 py-3 font-medium text-right">transaction_count</th>
+<th class="px-6 py-3 font-medium text-right">total_spent</th>
+<th class="px-6 py-3 font-medium">last_active</th>
+</tr>
+</thead>
+<tbody class="text-xs font-body text-on-surface-variant">
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-3 font-mono text-primary/80">9c1b2d...</td>
+<td class="px-6 py-3">alex_rivera</td>
+<td class="px-6 py-3 text-right">142</td>
+<td class="px-6 py-3 text-right text-secondary font-medium">$12,450.00</td>
+<td class="px-6 py-3 text-outline">2023-11-24 14:22:01</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-3 font-mono text-primary/80">4f7a9e...</td>
+<td class="px-6 py-3">sarah_connor</td>
+<td class="px-6 py-3 text-right">98</td>
+<td class="px-6 py-3 text-right text-secondary font-medium">$8,120.50</td>
+<td class="px-6 py-3 text-outline">2023-11-24 13:45:12</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-3 font-mono text-primary/80">2d4e1c...</td>
+<td class="px-6 py-3">tech_pioneer</td>
+<td class="px-6 py-3 text-right">76</td>
+<td class="px-6 py-3 text-right text-secondary font-medium">$6,944.20</td>
+<td class="px-6 py-3 text-outline">2023-11-24 13:10:00</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-3 font-mono text-primary/80">8a3b5d...</td>
+<td class="px-6 py-3">data_wizard</td>
+<td class="px-6 py-3 text-right">54</td>
+<td class="px-6 py-3 text-right text-secondary font-medium">$5,200.00</td>
+<td class="px-6 py-3 text-outline">2023-11-24 12:55:44</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="px-6 py-3 font-mono text-primary/80">1f9c0e...</td>
+<td class="px-6 py-3">cloud_runner</td>
+<td class="px-6 py-3 text-right">31</td>
+<td class="px-6 py-3 text-right text-secondary font-medium">$2,850.15</td>
+<td class="px-6 py-3 text-outline">2023-11-24 11:20:01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer / Pagination -->
+<div class="h-10 flex items-center justify-between px-6 bg-surface-container border-t border-white/5">
+<div class="text-[10px] font-label text-outline uppercase tracking-wider">Showing 1-25 of 1,248</div>
+<div class="flex items-center gap-1">
+<button class="p-1 hover:bg-white/5 rounded-sm text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">first_page</span>
+</button>
+<button class="p-1 hover:bg-white/5 rounded-sm text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<div class="px-3 text-[10px] font-label text-primary font-bold">1</div>
+<button class="p-1 hover:bg-white/5 rounded-sm text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="p-1 hover:bg-white/5 rounded-sm text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">last_page</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Feedback: Success Toast -->
+<div class="fixed bottom-8 right-8 z-[100] flex items-center gap-4 bg-secondary-container/90 backdrop-blur-md px-6 py-3 rounded-lg border border-secondary/20 shadow-2xl">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-secondary-container font-headline">Execution Success</span>
+<span class="text-[10px] text-on-secondary-container/80 font-label tracking-wide uppercase">1,248 rows returned in 42ms</span>
+</div>
+<button class="ml-4 text-on-secondary-container/60 hover:text-on-secondary-container">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</body></html>
