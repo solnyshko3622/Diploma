@@ -1,6 +1,20 @@
 // Authentication API functions
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1337/api';
+const USE_MOCK = import.meta.env.VITE_USE_MOCK_AUTH === 'true' || true; // Default to mock for development
+
+// Mock credentials
+const MOCK_USER = {
+  id: 1,
+  username: 'admin',
+  email: 'admin@taidon.com',
+  confirmed: true,
+  blocked: false,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+};
+
+const MOCK_JWT = 'mock-jwt-token-' + Date.now();
 
 export interface LoginCredentials {
   identifier: string; // email or username
@@ -40,6 +54,27 @@ export interface User {
  * Login user with email/username and password
  */
 export const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
+  // Use mock authentication if enabled
+  if (USE_MOCK) {
+    console.log('🔧 Using mock authentication');
+    
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Accept any credentials for mock
+    const mockResponse: AuthResponse = {
+      jwt: MOCK_JWT,
+      user: MOCK_USER,
+    };
+    
+    // Save JWT token to localStorage
+    localStorage.setItem('jwt', mockResponse.jwt);
+    localStorage.setItem('user', JSON.stringify(mockResponse.user));
+    
+    return mockResponse;
+  }
+  
+  // Real API call
   try {
     const response = await fetch(`${API_URL}/auth/local`, {
       method: 'POST',
@@ -71,6 +106,31 @@ export const login = async (credentials: LoginCredentials): Promise<AuthResponse
  * Register new user
  */
 export const register = async (userData: RegisterData): Promise<AuthResponse> => {
+  // Use mock authentication if enabled
+  if (USE_MOCK) {
+    console.log('🔧 Using mock registration');
+    
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Create mock user with provided data
+    const mockResponse: AuthResponse = {
+      jwt: MOCK_JWT,
+      user: {
+        ...MOCK_USER,
+        username: userData.username,
+        email: userData.email,
+      },
+    };
+    
+    // Save JWT token to localStorage
+    localStorage.setItem('jwt', mockResponse.jwt);
+    localStorage.setItem('user', JSON.stringify(mockResponse.user));
+    
+    return mockResponse;
+  }
+  
+  // Real API call
   try {
     const response = await fetch(`${API_URL}/auth/local/register`, {
       method: 'POST',

@@ -71,8 +71,8 @@ const AuthPage: React.FC = () => {
         });
       }
       
-      // Redirect to main page or dashboard after successful auth
-      navigate('/');
+      // Redirect to projects page after successful auth
+      navigate('/projects');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Произошла ошибка. Попробуйте снова.';
       setError(errorMessage);
