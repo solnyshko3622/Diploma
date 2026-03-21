@@ -1,15 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import MainPage from './pages/MainPage/MainPage';
+import AppRouter from './components/Router';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-      </Routes>
-    </Router>
-  );
+  return <AppRouter />;
 }
 
 export default App;

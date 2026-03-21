@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './main_page.css';
 import Footer from '../../components/Footer/Footer';
 import { useTheme } from '../../contexts/ThemeContext';
 
 const MainPage: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <div className="main-page">
@@ -28,8 +30,8 @@ const MainPage: React.FC = () => {
             >
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
-            <button className="btn-text">Войти</button>
-            <button className="btn-primary">Начать работу</button>
+            <button className="btn-text" onClick={() => navigate('/login')}>Войти</button>
+            <button className="btn-primary" onClick={() => navigate('/register')}>Начать работу</button>
           </div>
         </div>
       </nav>
@@ -48,7 +50,7 @@ const MainPage: React.FC = () => {
             Высокоточный SQL-интерфейс для работы с данными. Управляйте вашими базами данных Postgres, MySQL и SQLite с редакторской точностью.
           </p>
           <div className="hero-buttons">
-            <button className="btn-primary btn-large">Начать бесплатно</button>
+            <button className="btn-primary btn-large" onClick={() => navigate('/register')}>Начать бесплатно</button>
           </div>
           
           {/* Editor Screenshot */}
@@ -203,7 +205,7 @@ const MainPage: React.FC = () => {
             <p className="cta-description">
               Присоединяйтесь к элитным командам данных, которые перешли на Taidon SQL.
             </p>
-            <button className="btn-primary btn-large">Начать работу сейчас</button>
+            <button className="btn-primary btn-large" onClick={() => navigate('/register')}>Начать работу сейчас</button>
           </div>
         </section>
       </main>
