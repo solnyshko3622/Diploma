@@ -55,14 +55,7 @@ const MainPage: React.FC = () => {
           
           {/* Editor Screenshot */}
           <div className="editor-preview">
-            <div className="editor-header">
-              <div className="traffic-lights">
-                <div className="light light-red"></div>
-                <div className="light light-yellow"></div>
-                <div className="light light-green"></div>
-              </div>
-              <div className="file-tab">query_analytics_v4.sql</div>
-            </div>
+
             <div className="editor-placeholder">
               <div className="code-line"><span className="keyword">SELECT</span> users.id, profiles.bio, <span className="function">COUNT</span>(orders.id) <span className="keyword">AS</span> total_orders</div>
               <div className="code-line"><span className="keyword">FROM</span> users</div>
@@ -151,50 +144,6 @@ const MainPage: React.FC = () => {
             <div className="code-line"><span className="line-number">6</span><span className="keyword">AND</span> orders.amount &gt; <span className="number">500</span></div>
             <div className="code-line"><span className="line-number">7</span><span className="comment">-- Расчет сегмента высокой ценности</span></div>
             <div className="code-line"><span className="line-number">8</span><span className="keyword">GROUP BY</span> users.id, profiles.bio;</div>
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="testimonials-section">
-          <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <p className="testimonial-text">
-                "Редакторский подход к данным выделяет Taidon среди других. Это единственный SQL-редактор, который действительно помогает мне сосредоточиться на логике, а не на интерфейсе."
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar author-avatar-primary">АИ</div>
-                <div className="author-info">
-                  <p className="author-name">Анна Иванова</p>
-                  <p className="author-title">СТАРШИЙ ИНЖЕНЕР ДАННЫХ, ЯНДЕКС</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="testimonial-card">
-              <p className="testimonial-text">
-                "Наконец-то инструмент, который учитывает требования к производительности больших таблиц. Мы увидели немедленный рост продуктивности всей команды."
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar author-avatar-secondary">МП</div>
-                <div className="author-info">
-                  <p className="author-name">Михаил Петров</p>
-                  <p className="author-title">ГЛАВНЫЙ АРХИТЕКТОР, СБЕР</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="testimonial-card">
-              <p className="testimonial-text">
-                "Интерфейс — глоток свежего воздуха. Никакого беспорядка, только Taidon. Это премиальное рабочее пространство, созданное для профессионалов."
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar author-avatar-tertiary">ЕС</div>
-                <div className="author-info">
-                  <p className="author-name">Елена Смирнова</p>
-                  <p className="author-title">РУКОВОДИТЕЛЬ АНАЛИТИКИ, VK</p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 

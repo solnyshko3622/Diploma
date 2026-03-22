@@ -3,6 +3,7 @@ import MainPage from '../pages/MainPage/MainPage';
 import AuthPage from '../pages/AuthPage/AuthPage';
 import ProjectsPage from '../pages/ProjectsPage/ProjectsPage';
 import EditorPage from '../pages/EditorPage/EditorPage';
+import UserProfilePage from '../pages/UserProfilePage/UserProfilePage';
 
 function AppRouter() {
   return (
@@ -15,6 +16,7 @@ function AppRouter() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/editor/:projectId" element={<EditorPage />} />
         <Route path="/editor" element={<EditorPage />} />
+        <Route path="/profile" element={<UserProfilePage />} />
       </Routes>
     </Router>
   );
