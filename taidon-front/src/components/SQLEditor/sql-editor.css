@@ -1,0 +1,464 @@
+/* SQL Editor Container */
+.sql-editor-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
+  position: relative;
+  z-index: 1;
+}
+
+.sql-editor-container.dark {
+  border-color: #30363d;
+  background: #0d1117;
+}
+
+/* Toolbar */
+.sql-editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f6f8fa;
+  border-bottom: 1px solid #e1e5e9;
+  font-size: 12px;
+}
+
+.sql-editor-container.dark .sql-editor-toolbar {
+  background: #161b22;
+  border-bottom-color: #30363d;
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #24292f;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toolbar-button:hover {
+  background: #f3f4f6;
+  border-color: #8c959f;
+}
+
+.sql-editor-container.dark .toolbar-button {
+  border-color: #30363d;
+  background: #21262d;
+  color: #f0f6fc;
+}
+
+.sql-editor-container.dark .toolbar-button:hover {
+  background: #30363d;
+  border-color: #8b949e;
+}
+
+.run-button {
+  background: #2da44e;
+  border-color: #2da44e;
+  color: #ffffff;
+}
+
+.run-button:hover {
+  background: #2c974b;
+  border-color: #2c974b;
+}
+
+.error-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #fff8f0;
+  border: 1px solid #fd8c73;
+  border-radius: 4px;
+  color: #bc4c00;
+  font-size: 12px;
+}
+
+.sql-editor-container.dark .error-indicator {
+  background: #2d1b1b;
+  border-color: #f85149;
+  color: #f85149;
+}
+
+/* Editor */
+.sql-editor {
+  flex: 1;
+  min-height: 200px;
+  background: #ffffff;
+  position: relative;
+}
+
+.sql-editor .cm-editor {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.sql-editor .cm-content {
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  background: transparent;
+  color: #24292f;
+  min-height: 200px;
+  position: relative;
+  z-index: 1;
+}
+
+.sql-editor .cm-focused {
+  outline: none;
+}
+
+.sql-editor .cm-cursor {
+  border-left-color: #24292f;
+}
+
+.sql-editor-container.dark .sql-editor {
+  background: #0d1117;
+}
+
+.sql-editor-container.dark .sql-editor .cm-content {
+  color: #f0f6fc;
+}
+
+.sql-editor-container.dark .sql-editor .cm-cursor {
+  border-left-color: #f0f6fc;
+}
+
+/* Базовые стили для текста */
+.sql-editor .cm-line {
+  color: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+.sql-editor .cm-editor.cm-focused .cm-selectionBackground {
+  background: rgba(9, 105, 218, 0.2);
+}
+
+/* Исправление проблемы с белым прямоугольником */
+.sql-editor .cm-scroller {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+.sql-editor .cm-gutters {
+  background: #f6f8fa;
+  border-right: 1px solid #e1e5e9;
+  position: relative;
+  z-index: 2;
+}
+
+.sql-editor-container.dark .sql-editor .cm-gutters {
+  background: #161b22;
+  border-right-color: #30363d;
+}
+
+/* Status Bar */
+.sql-editor-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background: #f6f8fa;
+  border-top: 1px solid #e1e5e9;
+  font-size: 11px;
+  color: #656d76;
+}
+
+.sql-editor-container.dark .sql-editor-status {
+  background: #161b22;
+  border-top-color: #30363d;
+  color: #8b949e;
+}
+
+.status-item {
+  margin-right: 12px;
+}
+
+.status-hint {
+  font-style: italic;
+}
+
+/* SQL Syntax Highlighting */
+
+/* Keywords */
+.cm-sql-keyword {
+  color: #0969da;
+  font-weight: 600;
+}
+
+.sql-editor-container.dark .cm-sql-keyword {
+  color: #79c0ff;
+}
+
+/* Functions */
+.cm-sql-function {
+  color: #8250df;
+  font-weight: 500;
+}
+
+.sql-editor-container.dark .cm-sql-function {
+  color: #d2a8ff;
+}
+
+/* Strings */
+.cm-sql-string {
+  color: #0a3069;
+  background: rgba(175, 184, 193, 0.1);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.sql-editor-container.dark .cm-sql-string {
+  color: #a5d6ff;
+  background: rgba(56, 139, 253, 0.1);
+}
+
+/* Numbers */
+.cm-sql-number {
+  color: #0550ae;
+  font-weight: 500;
+}
+
+.sql-editor-container.dark .cm-sql-number {
+  color: #79c0ff;
+}
+
+/* Comments */
+.cm-sql-comment {
+  color: #6e7781;
+  font-style: italic;
+}
+
+.sql-editor-container.dark .cm-sql-comment {
+  color: #8b949e;
+}
+
+/* Operators */
+.cm-sql-operator,
+.cm-sql-logical {
+  color: #cf222e;
+  font-weight: 500;
+}
+
+.sql-editor-container.dark .cm-sql-operator,
+.sql-editor-container.dark .cm-sql-logical {
+  color: #ff7b72;
+}
+
+/* Identifiers */
+.cm-sql-identifier {
+  color: #24292f;
+}
+
+.sql-editor-container.dark .cm-sql-identifier {
+  color: #f0f6fc;
+}
+
+/* Variables */
+.cm-sql-variable {
+  color: #953800;
+  font-weight: 500;
+  background: rgba(255, 212, 181, 0.3);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.sql-editor-container.dark .cm-sql-variable {
+  color: #ffa657;
+  background: rgba(255, 166, 87, 0.1);
+}
+
+/* Boolean and NULL */
+.cm-sql-boolean,
+.cm-sql-null {
+  color: #8250df;
+  font-weight: 600;
+}
+
+.sql-editor-container.dark .cm-sql-boolean,
+.sql-editor-container.dark .cm-sql-null {
+  color: #d2a8ff;
+}
+
+/* Errors */
+.cm-sql-error {
+  color: #cf222e;
+  background: rgba(255, 129, 130, 0.2);
+  text-decoration: underline wavy #cf222e;
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.sql-editor-container.dark .cm-sql-error {
+  color: #f85149;
+  background: rgba(248, 81, 73, 0.1);
+  text-decoration-color: #f85149;
+}
+
+/* Line Numbers */
+.cm-lineNumbers {
+  color: #656d76;
+  background: #f6f8fa;
+  border-right: 1px solid #e1e5e9;
+  padding-right: 8px;
+}
+
+.sql-editor-container.dark .cm-lineNumbers {
+  color: #8b949e;
+  background: #161b22;
+  border-right-color: #30363d;
+}
+
+.cm-lineNumbers .cm-gutterElement {
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+/* Active Line */
+.cm-activeLine {
+  background: rgba(175, 184, 193, 0.1);
+}
+
+.sql-editor-container.dark .cm-activeLine {
+  background: rgba(56, 139, 253, 0.05);
+}
+
+/* Selection */
+.cm-selectionBackground {
+  background: rgba(9, 105, 218, 0.2);
+}
+
+.sql-editor-container.dark .cm-selectionBackground {
+  background: rgba(56, 139, 253, 0.2);
+}
+
+/* Matching Brackets */
+.cm-matchingBracket {
+  background: rgba(9, 105, 218, 0.1);
+  outline: 1px solid rgba(9, 105, 218, 0.3);
+  border-radius: 2px;
+}
+
+.sql-editor-container.dark .cm-matchingBracket {
+  background: rgba(56, 139, 253, 0.1);
+  outline-color: rgba(56, 139, 253, 0.3);
+}
+
+/* Search Highlighting */
+.cm-searchMatch {
+  background: rgba(255, 212, 0, 0.3);
+  outline: 1px solid rgba(255, 212, 0, 0.6);
+  border-radius: 2px;
+}
+
+.cm-searchMatch.cm-searchMatch-selected {
+  background: rgba(255, 212, 0, 0.5);
+}
+
+/* Diagnostic Messages */
+.cm-diagnostic {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.cm-diagnostic-error {
+  background: rgba(248, 81, 73, 0.1);
+  border-left: 3px solid #f85149;
+  color: #cf222e;
+}
+
+.sql-editor-container.dark .cm-diagnostic-error {
+  background: rgba(248, 81, 73, 0.1);
+  color: #f85149;
+}
+
+.cm-diagnostic-warning {
+  background: rgba(255, 166, 87, 0.1);
+  border-left: 3px solid #ffa657;
+  color: #953800;
+}
+
+.sql-editor-container.dark .cm-diagnostic-warning {
+  background: rgba(255, 166, 87, 0.1);
+  color: #ffa657;
+}
+
+/* Scrollbars */
+.cm-scroller::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.cm-scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: rgba(175, 184, 193, 0.5);
+  border-radius: 4px;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: rgba(175, 184, 193, 0.8);
+}
+
+.sql-editor-container.dark .cm-scroller::-webkit-scrollbar-thumb {
+  background: rgba(139, 148, 158, 0.3);
+}
+
+.sql-editor-container.dark .cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 148, 158, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sql-editor-toolbar {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  
+  .toolbar-left,
+  .toolbar-right {
+    justify-content: center;
+  }
+  
+  .status-hint {
+    display: none;
+  }
+}
+
+/* Animation for error indicator */
+@keyframes pulse-error {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.error-indicator {
+  animation: pulse-error 2s infinite;
+}

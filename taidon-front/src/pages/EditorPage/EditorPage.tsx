@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import SimpleEditor from '../../components/SimpleEditor/SimpleEditor';
 import './editor_page.css';
 
 interface QueryTab {
@@ -327,31 +328,12 @@ ORDER BY 4 DESC;`,
               </div>
             </div>
             <div className="editor-content">
-              <div className="editor-gutter">
-                {activeTab?.content.split('\n').map((_, index) => (
-                  <div key={index} className="line-number">{index + 1}</div>
-                ))}
-              </div>
-              <div className="editor-code">
-                <textarea
-                  className="code-textarea"
-                  value={activeTab?.content || ''}
-                  onChange={(e) => handleQueryChange(e.target.value)}
-                  spellCheck={false}
-                />
-                <div className="code-display">
-                  {activeTab?.content.split('\n').map((line, index) => (
-                    <div key={index} className="code-line">
-                      {highlightSQL(line)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="editor-status">
-                <span>PostgreSQL</span>
-                <span>Ln {cursorPosition.line}, Col {cursorPosition.col}</span>
-                <span>UTF-8</span>
-              </div>
+              <SimpleEditor
+                value={activeTab?.content || ''}
+                onChange={handleQueryChange}
+                onRun={handleRunQuery}
+                height="400px"
+              />
             </div>
           </section>
 
@@ -438,34 +420,5 @@ ORDER BY 4 DESC;`,
   );
 };
 
-// Simple SQL syntax highlighter
-function highlightSQL(line: string): React.ReactNode {
-  const keywords = /\b(SELECT|FROM|WHERE|JOIN|ON|AND|OR|GROUP BY|ORDER BY|AS|COUNT|SUM|INTERVAL|DESC|CURRENT_DATE)\b/gi;
-  const strings = /'[^']*'/g;
-  const numbers = /\b\d+\b/g;
-  const comments = /--.*$/;
-
-  let result: React.ReactNode[] = [];
-  let lastIndex = 0;
-
-  // Check for comment
-  if (line.trim().startsWith('--')) {
-    return <span className="sql-comment">{line}</span>;
-  }
-
-  // Simple highlighting (this is a basic implementation)
-  const parts = line.split(/(\s+|[(),;])/);
-  return parts.map((part, i) => {
-    if (keywords.test(part)) {
-      return <span key={i} className="sql-keyword">{part}</span>;
-    } else if (strings.test(part)) {
-      return <span key={i} className="sql-string">{part}</span>;
-    } else if (numbers.test(part)) {
-      return <span key={i} className="sql-number">{part}</span>;
-    } else {
-      return <span key={i}>{part}</span>;
-    }
-  });
-}
 
 export default EditorPage;
