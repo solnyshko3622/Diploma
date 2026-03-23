@@ -6,13 +6,13 @@ import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { sql } from '@codemirror/lang-sql';
 import { formatSQL } from '../../utils/sql-parser/codemirror-integration';
+import { useTheme } from '../../contexts/ThemeContext';
 import './sql-editor.css';
 
 interface SQLEditorProps {
   value: string;
   onChange: (value: string) => void;
   onRun?: () => void;
-  theme?: 'light' | 'dark';
   readOnly?: boolean;
   placeholder?: string;
   height?: string;
@@ -24,7 +24,6 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
   value,
   onChange,
   onRun,
-  theme = 'light',
   readOnly = false,
   placeholder = 'Введите SQL запрос...',
   height = '300px',
@@ -34,6 +33,7 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const [errorCount, setErrorCount] = useState(0);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -60,13 +60,13 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
           height: height,
           fontSize: '14px',
           fontFamily: '"Fira Code", "Monaco", "Menlo", monospace',
-          backgroundColor: theme === 'light' ? '#ffffff' : '#0d1117',
+          backgroundColor: 'transparent',
           position: 'relative'
         },
         '.cm-content': {
           padding: '12px',
           minHeight: height,
-          color: theme === 'light' ? '#24292f' : '#f0f6fc',
+          color: 'inherit',
           backgroundColor: 'transparent',
           position: 'relative',
           zIndex: '1'
@@ -95,8 +95,8 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
           outline: 'none !important'
         },
         '.cm-gutters': {
-          backgroundColor: theme === 'light' ? '#f6f8fa' : '#161b22',
-          borderRight: `1px solid ${theme === 'light' ? '#e1e5e9' : '#30363d'}`,
+          backgroundColor: 'transparent',
+          borderRight: 'none',
           position: 'relative',
           zIndex: '2'
         }
@@ -175,7 +175,7 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
     <div className="sql-editor-container">
       <div className="sql-editor-toolbar">
         <div className="toolbar-left">
-          <button 
+          <button
             className="toolbar-button format-button"
             onClick={handleFormat}
             title="Форматировать код (Shift+Alt+F)"
@@ -192,7 +192,7 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
         </div>
         <div className="toolbar-right">
           {onRun && (
-            <button 
+            <button
               className="toolbar-button run-button"
               onClick={handleRun}
               title="Выполнить запрос (Ctrl+Enter)"
@@ -203,9 +203,9 @@ export const SQLEditor: React.FC<SQLEditorProps> = ({
           )}
         </div>
       </div>
-      <div 
-        ref={editorRef} 
-        className={`sql-editor ${theme}`}
+      <div
+        ref={editorRef}
+        className="sql-editor"
         onKeyDown={handleKeyDown}
       />
       <div className="sql-editor-status">

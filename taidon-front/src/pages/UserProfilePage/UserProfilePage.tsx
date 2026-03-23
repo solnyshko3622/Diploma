@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 import './user_profile_page.css';
+import Header from '../../components/Header/Header';
 
 interface UserProfile {
   firstName: string;
@@ -90,82 +91,13 @@ const UserProfilePage: React.FC = () => {
 
   return (
     <div className="user-profile-page">
-      {/* Top Navigation */}
-      <nav className="profile-nav">
-        <div className="nav-content">
-          <div className="nav-left">
-            <span className="logo">Taidon</span>
-            <div className="nav-links">
-              <a href="/editor">Редактор</a>
-              <a href="/dashboard">Панель</a>
-              <a href="/projects">Проекты</a>
-              <a href="/profile" className="active">Настройки</a>
-            </div>
-          </div>
-          <div className="nav-right">
-            <button className="notification-btn">
-              <span className="material-icons">notifications</span>
-            </button>
-            <button className="help-btn">
-              <span className="material-icons">help_outline</span>
-            </button>
-            <div className="user-avatar-small">
-              <img src={profile.avatar} alt="User avatar" />
-            </div>
-          </div>
-        </div>
-      </nav>
-
+        <Header />
       <div className="profile-layout">
-        {/* Sidebar Navigation */}
-        <aside className="profile-sidebar">
-          <div className="sidebar-header">
-            <h2>Аккаунт</h2>
-            <p>Управление рабочим пространством</p>
-          </div>
-          <nav className="sidebar-nav">
-            <button 
-              className={`sidebar-item ${activeTab === 'profile' ? 'active' : ''}`}
-              onClick={() => setActiveTab('profile')}
-            >
-              <span className="material-icons">person</span>
-              Профиль
-            </button>
-            <button 
-              className={`sidebar-item ${activeTab === 'security' ? 'active' : ''}`}
-              onClick={() => setActiveTab('security')}
-            >
-              <span className="material-icons">shield</span>
-              Безопасность
-            </button>
-            <button 
-              className={`sidebar-item ${activeTab === 'billing' ? 'active' : ''}`}
-              onClick={() => setActiveTab('billing')}
-            >
-              <span className="material-icons">payments</span>
-              Оплата
-            </button>
-            <button 
-              className={`sidebar-item ${activeTab === 'api' ? 'active' : ''}`}
-              onClick={() => setActiveTab('api')}
-            >
-              <span className="material-icons">key</span>
-              API Ключи
-            </button>
-            <button 
-              className={`sidebar-item ${activeTab === 'preferences' ? 'active' : ''}`}
-              onClick={() => setActiveTab('preferences')}
-            >
-              <span className="material-icons">settings_suggest</span>
-              Настройки
-            </button>
-          </nav>
-        </aside>
 
         {/* Main Content */}
         <main className="profile-main">
           <header className="profile-header">
-            <h1>Профиль пользователя</h1>
+            <h1>Профиль</h1>
             <p>Обновите свою личную информацию и настройки.</p>
           </header>
 
@@ -243,25 +175,6 @@ const UserProfilePage: React.FC = () => {
                     </div>
                     <button className="btn-secondary">Обновить</button>
                   </div>
-                  <div className="security-item">
-                    <div className="security-info-with-icon">
-                      <div className="security-icon">
-                        <span className="material-icons">verified_user</span>
-                      </div>
-                      <div>
-                        <p className="security-title">Двухфакторная аутентификация</p>
-                        <p className="security-subtitle enabled">Включена</p>
-                      </div>
-                    </div>
-                    <div className="toggle-switch">
-                      <input 
-                        type="checkbox" 
-                        checked={profile.security.twoFactorEnabled}
-                        onChange={() => handleSecurityToggle('twoFactorEnabled')}
-                      />
-                      <span className="slider"></span>
-                    </div>
-                  </div>
                 </div>
               </section>
             </div>
@@ -320,48 +233,6 @@ const UserProfilePage: React.FC = () => {
                   </div>
                 </div>
               </section>
-
-              {/* Integrations */}
-              <section className="integrations-section">
-                <h2>Интеграции</h2>
-                <div className="integration-items">
-                  <div className="integration-item">
-                    <div className="integration-info">
-                      <div className="integration-icon">
-                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" />
-                      </div>
-                      <span>GitHub</span>
-                    </div>
-                    <span className={`integration-status ${profile.integrations.github ? 'connected' : ''}`}>
-                      {profile.integrations.github ? 'Подключено' : 'Подключить'}
-                    </span>
-                  </div>
-                  <div className="integration-item">
-                    <div className="integration-info">
-                      <div className="integration-icon">
-                        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" />
-                      </div>
-                      <span>Google</span>
-                    </div>
-                    <button 
-                      className="integration-connect"
-                      onClick={() => handleIntegrationToggle('google')}
-                    >
-                      {profile.integrations.google ? 'Отключить' : 'Подключить'}
-                    </button>
-                  </div>
-                </div>
-              </section>
-
-              {/* Info Box */}
-              <div className="info-box">
-                <div className="info-content">
-                  <span className="material-icons">info</span>
-                  <p>
-                    Ваши данные защищены с помощью шифрования AES-256. Интегрированные аккаунты используются только для аутентификации и синхронизации репозиториев.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </main>

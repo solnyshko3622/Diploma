@@ -18,7 +18,6 @@ const MainPage: React.FC = () => {
             <div className="nav-links">
               <a href="#features">Возможности</a>
               <a href="#how-it-works">Как это работает</a>
-              <a href="#testimonials">Отзывы</a>
             </div>
           </div>
           <div className="nav-right">
@@ -44,10 +43,10 @@ const MainPage: React.FC = () => {
             <span className="badge-text">Бета версия</span>
           </div>
           <h1 className="hero-title">
-            Точные запросы для <span className="gradient-text">современных команд</span>.
+            Упрощаем работу с SQL <span className="gradient-text">улучшаем пользовательский опыт</span>.
           </h1>
           <p className="hero-description">
-            Высокоточный SQL-интерфейс для работы с данными. Управляйте вашими базами данных Postgres, MySQL и SQLite с редакторской точностью.
+            Простой и лёгкий SQL-интерфейс для работы с данными. Управляйте вашими базами данных быстро и просто.
           </p>
           <div className="hero-buttons">
             <button className="btn-primary btn-large" onClick={() => navigate('/register')}>Начать бесплатно</button>
@@ -103,9 +102,9 @@ const MainPage: React.FC = () => {
             {/* Collaborative Feature */}
             <div className="feature-card">
               <span className="feature-icon">👥</span>
-              <h3 className="feature-title">Совместная работа</h3>
+              <h3 className="feature-title">Качественная подсветка</h3>
               <p className="feature-description">
-                Делитесь запросами с коллегами в реальном времени. Парное программирование сложных запросов с отображением курсоров.
+                Разбор кода и подсветка синтаксиса для уменьшения ошибок
               </p>
             </div>
 
@@ -114,13 +113,10 @@ const MainPage: React.FC = () => {
               <div className="feature-content-horizontal">
                 <div>
                   <span className="feature-icon">🔒</span>
-                  <h3 className="feature-title">Продвинутая безопасность</h3>
+                  <h3 className="feature-title">Простой интерфейс</h3>
                   <p className="feature-description">
-                    Полные журналы аудита для каждого выполненного запроса. Ролевой контроль доступа с интеграцией вашего SSO.
+                    Интерфейс, не перегруженный сложным функционалом для простой работы
                   </p>
-                </div>
-                <div className="security-badge">
-                  <span className="security-icon">🔑</span>
                 </div>
               </div>
             </div>
@@ -132,7 +128,7 @@ const MainPage: React.FC = () => {
           <div className="section-header">
             <h2 className="section-title">Изысканный синтаксис</h2>
             <p className="section-description">
-              Команда — это главное. Оптимизировано для визуальной ясности и длинных запросов.
+             Оптимизированная подсветка синтаксиса для уменьшения ошибок
             </p>
           </div>
           <div className="code-snippet">
@@ -152,7 +148,7 @@ const MainPage: React.FC = () => {
           <div className="cta-card">
             <h2 className="cta-title">Готовы работать с точностью?</h2>
             <p className="cta-description">
-              Присоединяйтесь к элитным командам данных, которые перешли на Taidon SQL.
+              Присоединяйтесь к командам, которые перешли на Taidon SQL.
             </p>
             <button className="btn-primary btn-large" onClick={() => navigate('/register')}>Начать работу сейчас</button>
           </div>

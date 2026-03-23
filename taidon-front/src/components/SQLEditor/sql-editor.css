@@ -2,18 +2,14 @@
 .sql-editor-container {
   display: flex;
   flex-direction: column;
-  border: 1px solid #e1e5e9;
+  border: 1px solid var(--outline);
   border-radius: 8px;
   overflow: hidden;
-  background: #ffffff;
+  background: var(--surface-container-low);
   font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
   position: relative;
   z-index: 1;
-}
-
-.sql-editor-container.dark {
-  border-color: #30363d;
-  background: #0d1117;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Toolbar */
@@ -22,14 +18,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: #f6f8fa;
-  border-bottom: 1px solid #e1e5e9;
+  background: var(--surface-container);
+  border-bottom: 1px solid var(--outline);
   font-size: 12px;
-}
-
-.sql-editor-container.dark .sql-editor-toolbar {
-  background: #161b22;
-  border-bottom-color: #30363d;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .toolbar-left,
@@ -44,40 +36,29 @@
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--outline);
   border-radius: 4px;
-  background: #ffffff;
-  color: #24292f;
+  background: var(--surface-container-low);
+  color: var(--on-surface);
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .toolbar-button:hover {
-  background: #f3f4f6;
-  border-color: #8c959f;
-}
-
-.sql-editor-container.dark .toolbar-button {
-  border-color: #30363d;
-  background: #21262d;
-  color: #f0f6fc;
-}
-
-.sql-editor-container.dark .toolbar-button:hover {
-  background: #30363d;
-  border-color: #8b949e;
+  background: var(--surface-container-high);
+  border-color: var(--outline-variant);
 }
 
 .run-button {
-  background: #2da44e;
-  border-color: #2da44e;
-  color: #ffffff;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
 }
 
 .run-button:hover {
-  background: #2c974b;
-  border-color: #2c974b;
+  background: var(--primary-container);
+  border-color: var(--primary-container);
 }
 
 .error-indicator {
@@ -85,25 +66,20 @@
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  background: #fff8f0;
-  border: 1px solid #fd8c73;
+  background: var(--error-container, rgba(255, 107, 107, 0.1));
+  border: 1px solid var(--error);
   border-radius: 4px;
-  color: #bc4c00;
+  color: var(--error);
   font-size: 12px;
-}
-
-.sql-editor-container.dark .error-indicator {
-  background: #2d1b1b;
-  border-color: #f85149;
-  color: #f85149;
 }
 
 /* Editor */
 .sql-editor {
   flex: 1;
   min-height: 200px;
-  background: #ffffff;
+  background: var(--surface-container-low);
   position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .sql-editor .cm-editor {
@@ -118,7 +94,7 @@
   font-size: 14px;
   line-height: 1.5;
   background: transparent;
-  color: #24292f;
+  color: var(--on-surface);
   min-height: 200px;
   position: relative;
   z-index: 1;
@@ -129,19 +105,7 @@
 }
 
 .sql-editor .cm-cursor {
-  border-left-color: #24292f;
-}
-
-.sql-editor-container.dark .sql-editor {
-  background: #0d1117;
-}
-
-.sql-editor-container.dark .sql-editor .cm-content {
-  color: #f0f6fc;
-}
-
-.sql-editor-container.dark .sql-editor .cm-cursor {
-  border-left-color: #f0f6fc;
+  border-left-color: var(--on-surface);
 }
 
 /* Базовые стили для текста */
@@ -163,15 +127,11 @@
 }
 
 .sql-editor .cm-gutters {
-  background: #f6f8fa;
-  border-right: 1px solid #e1e5e9;
+  background: var(--surface-container);
+  border-right: 1px solid var(--outline);
   position: relative;
   z-index: 2;
-}
-
-.sql-editor-container.dark .sql-editor .cm-gutters {
-  background: #161b22;
-  border-right-color: #30363d;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Status Bar */
@@ -180,16 +140,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 6px 12px;
-  background: #f6f8fa;
-  border-top: 1px solid #e1e5e9;
+  background: var(--surface-container);
+  border-top: 1px solid var(--outline);
   font-size: 11px;
-  color: #656d76;
-}
-
-.sql-editor-container.dark .sql-editor-status {
-  background: #161b22;
-  border-top-color: #30363d;
-  color: #8b949e;
+  color: var(--on-surface-variant);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .status-item {
@@ -202,133 +157,84 @@
 
 /* SQL Syntax Highlighting */
 
+/* SQL Syntax Highlighting */
+
 /* Keywords */
 .cm-sql-keyword {
-  color: #0969da;
+  color: var(--syntax-keyword);
   font-weight: 600;
-}
-
-.sql-editor-container.dark .cm-sql-keyword {
-  color: #79c0ff;
 }
 
 /* Functions */
 .cm-sql-function {
-  color: #8250df;
+  color: var(--syntax-function);
   font-weight: 500;
-}
-
-.sql-editor-container.dark .cm-sql-function {
-  color: #d2a8ff;
 }
 
 /* Strings */
 .cm-sql-string {
-  color: #0a3069;
-  background: rgba(175, 184, 193, 0.1);
+  color: var(--syntax-string);
+  background: var(--primary-fixed, rgba(184, 195, 255, 0.1));
   padding: 1px 2px;
   border-radius: 2px;
 }
 
-.sql-editor-container.dark .cm-sql-string {
-  color: #a5d6ff;
-  background: rgba(56, 139, 253, 0.1);
-}
-
 /* Numbers */
 .cm-sql-number {
-  color: #0550ae;
+  color: var(--syntax-number);
   font-weight: 500;
-}
-
-.sql-editor-container.dark .cm-sql-number {
-  color: #79c0ff;
 }
 
 /* Comments */
 .cm-sql-comment {
-  color: #6e7781;
+  color: var(--syntax-comment);
   font-style: italic;
-}
-
-.sql-editor-container.dark .cm-sql-comment {
-  color: #8b949e;
 }
 
 /* Operators */
 .cm-sql-operator,
 .cm-sql-logical {
-  color: #cf222e;
+  color: var(--error);
   font-weight: 500;
-}
-
-.sql-editor-container.dark .cm-sql-operator,
-.sql-editor-container.dark .cm-sql-logical {
-  color: #ff7b72;
 }
 
 /* Identifiers */
 .cm-sql-identifier {
-  color: #24292f;
-}
-
-.sql-editor-container.dark .cm-sql-identifier {
-  color: #f0f6fc;
+  color: var(--on-surface);
 }
 
 /* Variables */
 .cm-sql-variable {
-  color: #953800;
+  color: var(--accent-orange, var(--syntax-number));
   font-weight: 500;
-  background: rgba(255, 212, 181, 0.3);
+  background: var(--accent-orange-container, rgba(255, 183, 131, 0.2));
   padding: 1px 2px;
   border-radius: 2px;
-}
-
-.sql-editor-container.dark .cm-sql-variable {
-  color: #ffa657;
-  background: rgba(255, 166, 87, 0.1);
 }
 
 /* Boolean and NULL */
 .cm-sql-boolean,
 .cm-sql-null {
-  color: #8250df;
+  color: var(--syntax-function);
   font-weight: 600;
-}
-
-.sql-editor-container.dark .cm-sql-boolean,
-.sql-editor-container.dark .cm-sql-null {
-  color: #d2a8ff;
 }
 
 /* Errors */
 .cm-sql-error {
-  color: #cf222e;
-  background: rgba(255, 129, 130, 0.2);
-  text-decoration: underline wavy #cf222e;
+  color: var(--error);
+  background: var(--error-container, rgba(255, 107, 107, 0.2));
+  text-decoration: underline wavy var(--error);
   padding: 1px 2px;
   border-radius: 2px;
 }
 
-.sql-editor-container.dark .cm-sql-error {
-  color: #f85149;
-  background: rgba(248, 81, 73, 0.1);
-  text-decoration-color: #f85149;
-}
-
 /* Line Numbers */
 .cm-lineNumbers {
-  color: #656d76;
-  background: #f6f8fa;
-  border-right: 1px solid #e1e5e9;
+  color: var(--on-surface-variant);
+  background: var(--surface-container);
+  border-right: 1px solid var(--outline);
   padding-right: 8px;
-}
-
-.sql-editor-container.dark .cm-lineNumbers {
-  color: #8b949e;
-  background: #161b22;
-  border-right-color: #30363d;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .cm-lineNumbers .cm-gutterElement {
@@ -338,32 +244,19 @@
 
 /* Active Line */
 .cm-activeLine {
-  background: rgba(175, 184, 193, 0.1);
-}
-
-.sql-editor-container.dark .cm-activeLine {
-  background: rgba(56, 139, 253, 0.05);
+  background: var(--primary-fixed, rgba(184, 195, 255, 0.1));
 }
 
 /* Selection */
 .cm-selectionBackground {
-  background: rgba(9, 105, 218, 0.2);
-}
-
-.sql-editor-container.dark .cm-selectionBackground {
-  background: rgba(56, 139, 253, 0.2);
+  background: var(--primary-fixed, rgba(184, 195, 255, 0.2));
 }
 
 /* Matching Brackets */
 .cm-matchingBracket {
-  background: rgba(9, 105, 218, 0.1);
-  outline: 1px solid rgba(9, 105, 218, 0.3);
+  background: var(--primary-fixed, rgba(184, 195, 255, 0.1));
+  outline: 1px solid var(--primary, rgba(184, 195, 255, 0.3));
   border-radius: 2px;
-}
-
-.sql-editor-container.dark .cm-matchingBracket {
-  background: rgba(56, 139, 253, 0.1);
-  outline-color: rgba(56, 139, 253, 0.3);
 }
 
 /* Search Highlighting */

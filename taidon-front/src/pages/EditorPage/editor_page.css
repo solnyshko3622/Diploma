@@ -13,8 +13,8 @@
 /* ===== HEADER ===== */
 .editor-header {
   height: 64px;
-  background: #131313;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-low);
+  border-bottom: 1px solid var(--outline);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,6 +24,7 @@
   left: 0;
   right: 0;
   z-index: 50;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .header-left {
@@ -181,13 +182,14 @@
 /* ===== ICON RAIL ===== */
 .icon-rail {
   width: 64px;
-  background: #0e0e0e;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-low);
+  border-right: 1px solid var(--outline);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem 0;
   z-index: 40;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .rail-top,
@@ -226,16 +228,18 @@
 /* ===== EXPLORER SIDEBAR ===== */
 .explorer-sidebar {
   width: 256px;
-  background: #0e0e0e;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-low);
+  border-right: 1px solid var(--outline);
   display: flex;
   flex-direction: column;
   z-index: 30;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .sidebar-header {
   padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--outline);
+  transition: border-color 0.3s ease;
 }
 
 .database-info {
@@ -333,7 +337,7 @@
 }
 
 .schema-summary:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-high);
 }
 
 .chevron {
@@ -368,7 +372,7 @@
 
 .table-item:hover {
   color: var(--on-surface);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-high);
 }
 
 .table-icon {
@@ -378,20 +382,22 @@
 /* ===== HISTORY SIDEBAR ===== */
 .history-sidebar {
   width: 288px;
-  background: #131313;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-low);
+  border-right: 1px solid var(--outline);
   display: flex;
   flex-direction: column;
   z-index: 20;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .history-header {
   height: 64px;
   padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--outline);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: border-color 0.3s ease;
 }
 
 .history-title {
@@ -500,8 +506,9 @@
 
 .history-footer {
   padding: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background: #0e0e0e;
+  border-top: 1px solid var(--outline);
+  background: var(--surface-container);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-view-all {
@@ -541,10 +548,11 @@
 
 .editor-tabs {
   height: 40px;
-  background: #0e0e0e;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-container);
+  border-bottom: 1px solid var(--outline);
   display: flex;
   align-items: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .tabs-list {
@@ -569,7 +577,7 @@
 
 .tab:hover {
   color: var(--on-surface);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-container-high);
 }
 
 .tab.active {
@@ -600,7 +608,7 @@
 }
 
 .tab-close:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-container-highest);
   opacity: 1;
 }
 
@@ -726,10 +734,11 @@
 .results-header {
   height: 40px;
   padding: 0 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--outline);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: border-color 0.3s ease;
 }
 
 .results-info {
@@ -817,7 +826,8 @@
   color: var(--outline);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--outline);
+  transition: border-color 0.3s ease;
 }
 
 .results-table tbody tr {
@@ -844,10 +854,11 @@
   height: 40px;
   padding: 0 1.5rem;
   background: var(--surface-container);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--outline);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .pagination-info {
@@ -880,7 +891,7 @@
 }
 
 .pagination-button:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-container-high);
   color: var(--on-surface);
 }
 
@@ -975,14 +986,14 @@
 .sidebar-nav::-webkit-scrollbar-track,
 .history-list::-webkit-scrollbar-track,
 .results-table-container::-webkit-scrollbar-track {
-  background: #0e0e0e;
+  background: var(--surface-container-low);
 }
 
 .editor-content::-webkit-scrollbar-thumb,
 .sidebar-nav::-webkit-scrollbar-thumb,
 .history-list::-webkit-scrollbar-thumb,
 .results-table-container::-webkit-scrollbar-thumb {
-  background: #353534;
+  background: var(--surface-container-highest);
   border-radius: 10px;
 }
 
@@ -990,7 +1001,7 @@
 .sidebar-nav::-webkit-scrollbar-thumb:hover,
 .history-list::-webkit-scrollbar-thumb:hover,
 .results-table-container::-webkit-scrollbar-thumb:hover {
-  background: #434656;
+  background: var(--on-surface-variant);
 }
 
 /* ===== RESPONSIVE ===== */
