@@ -263,10 +263,10 @@ const AuthPage: React.FC = () => {
               <span className="badge-text">Бета версия</span>
             </div>
             <h2 className="side-panel-title">
-              Точные запросы для <span className="gradient-text">современных команд</span>
+              Упрощаем работу с SQL <span className="gradient-text">улучшаем пользовательский опыт</span>.
             </h2>
             <p className="side-panel-description">
-              Высокоточный SQL-интерфейс для работы с данными. Управляйте вашими базами данных с редакторской точностью.
+              Простой и лёгкий SQL-интерфейс для работы с данными. Управляйте вашими базами данных быстро и просто.
             </p>
             <div className="side-panel-features">
               <div className="feature-item">
@@ -275,11 +275,11 @@ const AuthPage: React.FC = () => {
               </div>
               <div className="feature-item">
                 <span className="feature-icon">✓</span>
-                <span className="feature-text">Совместная работа в реальном времени</span>
+                <span className="feature-text">Удобная подсветка синтаксиса</span>
               </div>
               <div className="feature-item">
                 <span className="feature-icon">✓</span>
-                <span className="feature-text">Продвинутая безопасность</span>
+                <span className="feature-text">Быстрое выполнение запросов</span>
               </div>
             </div>
           </div>

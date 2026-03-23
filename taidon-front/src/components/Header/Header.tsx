@@ -24,10 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   const navItems = [
-    { id: 'editor', label: 'Editor', path: '/editor' },
-    { id: 'dashboard', label: 'Dashboard', path: '/dashboard' },
     { id: 'projects', label: 'Projects', path: '/projects' },
-    { id: 'settings', label: 'Settings', path: '/settings' },
   ];
 
   return (
@@ -36,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({
         {/* Left Section */}
         <div className="header-left">
           <span className="header-logo" onClick={() => navigate('/')}>
-            MONOLITH_SQL
+            TAIDON
           </span>
           
           {showNavigation && (
@@ -68,20 +65,6 @@ const Header: React.FC<HeaderProps> = ({
             title={theme === 'light' ? 'Переключить на тёмную тему' : 'Переключить на светлую тему'}
           >
             <span className="material-icon">{theme === 'light' ? '🌙' : '☀️'}</span>
-          </button>
-
-          {/* Notifications */}
-          <button className="header-icon-button" aria-label="Notifications">
-            <span className="material-icon">🔔</span>
-          </button>
-
-          {/* Settings */}
-          <button 
-            className="header-icon-button" 
-            aria-label="Settings"
-            onClick={() => navigate('/settings')}
-          >
-            <span className="material-icon">⚙️</span>
           </button>
 
           {/* User Profile */}

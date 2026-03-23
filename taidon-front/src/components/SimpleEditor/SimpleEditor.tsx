@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { parseSQL } from '../../utils/sql-parser';
+import { useTheme } from '../../contexts/ThemeContext';
 import './simple-editor.css';
 
 interface SimpleEditorProps {
@@ -17,6 +18,7 @@ export const SimpleEditor: React.FC<SimpleEditorProps> = ({
 }) => {
   const [errors, setErrors] = useState<any[]>([]);
   const [highlightedCode, setHighlightedCode] = useState<string>('');
+  const { theme } = useTheme();
 
   useEffect(() => {
     // Парсим SQL и получаем ошибки

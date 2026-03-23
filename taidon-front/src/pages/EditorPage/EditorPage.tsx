@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import SimpleEditor from '../../components/SimpleEditor/SimpleEditor';
 import './editor_page.css';
+import Header from '../../components/Header/Header';
 
 interface QueryTab {
   id: string;
@@ -157,41 +158,7 @@ ORDER BY 4 DESC;`,
 
   return (
     <div className="editor-page">
-      {/* Top Navigation Bar */}
-      <header className="editor-header">
-        <div className="header-left">
-          <span className="header-logo" onClick={() => navigate('/projects')}>
-            MONOLITH_SQL
-          </span>
-          <nav className="header-nav">
-            <a href="#" className="nav-link active">Editor</a>
-            <a href="#" className="nav-link">Dashboards</a>
-            <a href="#" className="nav-link">Collections</a>
-            <a href="#" className="nav-link">Admin</a>
-          </nav>
-        </div>
-        <div className="header-right">
-          <div className="database-badge">
-            <span className="database-icon">💾</span>
-            <span className="database-name">{currentDatabase}</span>
-          </div>
-          <button className="btn-run" onClick={handleRunQuery}>
-            <span className="btn-icon">▶</span>
-            <span className="btn-text">RUN</span>
-          </button>
-          <div className="header-actions">
-            <button className="icon-button" aria-label="Notifications">
-              <span className="icon">🔔</span>
-            </button>
-            <button className="icon-button" aria-label="Settings">
-              <span className="icon">⚙️</span>
-            </button>
-            <div className="user-avatar">
-              <div className="avatar-circle">U</div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <div className="editor-layout">
         {/* Icon Rail */}
@@ -216,14 +183,6 @@ ORDER BY 4 DESC;`,
             </button>
             <button className="rail-button" title="Connections">
               <span className="icon">🔌</span>
-            </button>
-          </div>
-          <div className="rail-bottom">
-            <button className="rail-button" title="Docs">
-              <span className="icon">❓</span>
-            </button>
-            <button className="rail-button" title="Support">
-              <span className="icon">💬</span>
             </button>
           </div>
         </aside>
