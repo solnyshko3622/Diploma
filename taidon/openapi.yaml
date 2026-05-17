@@ -1,0 +1,1108 @@
+openapi: 3.0.3
+info:
+  title: Taidon API
+  description: |
+    API для системы управления SQL проектами и скриптами Taidon.
+    
+    Taidon - это веб-приложение для создания, редактирования и управления SQL скриптами 
+    с поддержкой совместной работы и управления проектами.
+    
+    ## Основные возможности
+    - Аутентификация пользователей с JWT токенами
+    - Управление проектами (создание, редактирование, удаление)
+    - Управление SQL скриптами внутри проектов
+    - Система прав доступа к проектам
+    - Копирование проектов
+    
+    ## Аутентификация
+    API использует JWT токены для аутентификации. Токен должен быть передан в заголовке:
+    ```
+    Authorization: Bearer <token>
+    ```
+  version: 1.0.0
+  contact:
+    name: Taidon Support
+    email: support@taidon.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.taidon.com
+    description: Production server
+
+security:
+  - BearerAuth: []
+
+paths:
+  /health:
+    get:
+      summary: Проверка состояния API
+      description: Проверяет доступность и состояние API сервера
+      tags:
+        - Health
+      security: []
+      responses:
+        '200':
+          description: API работает нормально
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  message:
+                    type: string
+                    example: "API is healthy"
+
+  /auth/register:
+    post:
+      summary: Регистрация нового пользователя
+      description: Создает новую учетную запись пользователя
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: Пользователь успешно зарегистрирован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Пользователь уже существует
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      summary: Вход в систему
+      description: Аутентификация пользователя и получение JWT токена
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Имя пользователя или email
+                password:
+                  type: string
+                  description: Пароль пользователя
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Успешная аутентификация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Неверные учетные данные
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/me:
+    get:
+      summary: Получить информацию о текущем пользователе
+      description: Возвращает данные аутентифицированного пользователя
+      tags:
+        - Authentication
+      responses:
+        '200':
+          description: Информация о пользователе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Обновить профиль пользователя
+      description: Обновляет информацию о текущем пользователе
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Профиль успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/:
+    get:
+      summary: Получить список проектов пользователя
+      description: Возвращает проекты, принадлежащие пользователю и доступные ему
+      tags:
+        - Projects
+      responses:
+        '200':
+          description: Список проектов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectsList'
+        '401':
+          description: Не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Создать новый проект
+      description: Создает новый проект для текущего пользователя
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+      responses:
+        '201':
+          description: Проект успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{id}:
+    get:
+      summary: Получить проект по ID
+      description: Возвращает детальную информацию о проекте
+      tags:
+        - Projects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+      responses:
+        '200':
+          description: Информация о проекте
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет доступа к проекту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Обновить проект
+      description: Обновляет информацию о проекте
+      tags:
+        - Projects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdate'
+      responses:
+        '200':
+          description: Проект успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на редактирование
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Удалить проект
+      description: Удаляет проект и все связанные с ним скрипты
+      tags:
+        - Projects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+      responses:
+        '200':
+          description: Проект успешно удален
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Project deleted successfully"
+        '404':
+          description: Проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на удаление
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{id}/copy:
+    post:
+      summary: Копировать проект
+      description: Создает копию существующего проекта
+      tags:
+        - Projects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта для копирования
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCopy'
+      responses:
+        '201':
+          description: Проект успешно скопирован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Исходный проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет доступа к проекту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{id}/permissions:
+    get:
+      summary: Получить права доступа к проекту
+      description: Возвращает список пользователей с правами доступа к проекту
+      tags:
+        - Project Permissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+      responses:
+        '200':
+          description: Список прав доступа
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectPermission'
+        '404':
+          description: Проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на просмотр разрешений
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Предоставить доступ к проекту
+      description: Предоставляет пользователю права доступа к проекту
+      tags:
+        - Project Permissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectPermissionCreate'
+      responses:
+        '201':
+          description: Доступ успешно предоставлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectPermission'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Проект или пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на управление доступом
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{id}/permissions/{user_id}:
+    put:
+      summary: Изменить права доступа пользователя
+      description: Изменяет уровень доступа пользователя к проекту
+      tags:
+        - Project Permissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectPermissionUpdate'
+      responses:
+        '200':
+          description: Права доступа успешно изменены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectPermission'
+        '404':
+          description: Проект, пользователь или разрешение не найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на управление доступом
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Отозвать доступ к проекту
+      description: Удаляет права доступа пользователя к проекту
+      tags:
+        - Project Permissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID пользователя
+      responses:
+        '200':
+          description: Доступ успешно отозван
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Permission revoked successfully"
+        '404':
+          description: Проект, пользователь или разрешение не найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на управление доступом
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /scripts/project/{project_id}:
+    get:
+      summary: Получить скрипты проекта
+      description: Возвращает все скрипты, принадлежащие указанному проекту
+      tags:
+        - Scripts
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID проекта
+      responses:
+        '200':
+          description: Список скриптов проекта
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Script'
+        '404':
+          description: Проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет доступа к проекту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /scripts/:
+    post:
+      summary: Создать новый скрипт
+      description: Создает новый SQL скрипт в указанном проекте
+      tags:
+        - Scripts
+      parameters:
+        - name: project_id
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: ID проекта, в котором создается скрипт
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScriptCreate'
+      responses:
+        '201':
+          description: Скрипт успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Проект не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на создание скриптов в проекте
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /scripts/{id}:
+    get:
+      summary: Получить скрипт по ID
+      description: Возвращает детальную информацию о скрипте
+      tags:
+        - Scripts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID скрипта
+      responses:
+        '200':
+          description: Информация о скрипте
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+        '404':
+          description: Скрипт не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет доступа к скрипту
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Обновить скрипт
+      description: Обновляет содержимое или метаданные скрипта
+      tags:
+        - Scripts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID скрипта
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScriptUpdate'
+      responses:
+        '200':
+          description: Скрипт успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+        '400':
+          description: Ошибка валидации данных
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Скрипт не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на редактирование скрипта
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Удалить скрипт
+      description: Удаляет скрипт из проекта
+      tags:
+        - Scripts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID скрипта
+      responses:
+        '200':
+          description: Скрипт успешно удален
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Script deleted successfully"
+        '404':
+          description: Скрипт не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Нет прав на удаление скрипта
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Уникальный идентификатор пользователя
+          example: 1
+        username:
+          type: string
+          description: Имя пользователя
+          example: "admin"
+        email:
+          type: string
+          format: email
+          description: Email адрес пользователя
+          example: "admin@taidon.com"
+        full_name:
+          type: string
+          description: Полное имя пользователя
+          example: "Администратор"
+        is_active:
+          type: boolean
+          description: Активен ли пользователь
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          description: Дата создания аккаунта
+        updated_at:
+          type: string
+          format: date-time
+          description: Дата последнего обновления
+      required:
+        - id
+        - username
+        - email
+        - full_name
+        - is_active
+        - created_at
+        - updated_at
+
+    UserRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Имя пользователя
+          example: "newuser"
+        email:
+          type: string
+          format: email
+          description: Email адрес
+          example: "newuser@example.com"
+        full_name:
+          type: string
+          description: Полное имя
+          example: "Новый Пользователь"
+        password:
+          type: string
+          description: Пароль
+          example: "securepassword123"
+      required:
+        - username
+        - email
+        - full_name
+        - password
+
+    UserUpdate:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Новое имя пользователя
+        email:
+          type: string
+          format: email
+          description: Новый email адрес
+        full_name:
+          type: string
+          description: Новое полное имя
+
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT токен для аутентификации
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        token_type:
+          type: string
+          description: Тип токена
+          example: "bearer"
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+        - access_token
+        - token_type
+        - user
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Уникальный идентификатор проекта
+          example: 1
+        name:
+          type: string
+          description: Название проекта
+          example: "Мой SQL проект"
+        description:
+          type: string
+          description: Описание проекта
+          example: "Проект для анализа данных"
+        is_public:
+          type: boolean
+          description: Публичный ли проект
+          example: false
+        owner_id:
+          type: integer
+          description: ID владельца проекта
+          example: 1
+        owner:
+          $ref: '#/components/schemas/User'
+        scripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Script'
+          description: Скрипты проекта
+        created_at:
+          type: string
+          format: date-time
+          description: Дата создания проекта
+        updated_at:
+          type: string
+          format: date-time
+          description: Дата последнего обновления
+      required:
+        - id
+        - name
+        - is_public
+        - owner_id
+        - owner
+        - created_at
+        - updated_at
+
+    ProjectCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название проекта
+          example: "Новый проект"
+        description:
+          type: string
+          description: Описание проекта
+          example: "Описание нового проекта"
+        is_public:
+          type: boolean
+          description: Публичный ли проект
+          example: false
+      required:
+        - name
+
+    ProjectUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Новое название проекта
+        description:
+          type: string
+          description: Новое описание проекта
+        is_public:
+          type: boolean
+          description: Изменить публичность проекта
+
+    ProjectCopy:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название копии проекта
+          example: "Копия проекта"
+        description:
+          type: string
+          description: Описание копии
+        copy_scripts:
+          type: boolean
+          description: Копировать ли скрипты
+          example: true
+      required:
+        - name
+
+    ProjectsList:
+      type: object
+      properties:
+        owned_projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+          description: Проекты, принадлежащие пользователю
+        shared_projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+          description: Проекты, к которым предоставлен доступ
+      required:
+        - owned_projects
+        - shared_projects
+
+    ProjectPermission:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID разрешения
+          example: 1
+        project_id:
+          type: integer
+          description: ID проекта
+          example: 1
+        user_id:
+          type: integer
+          description: ID пользователя
+          example: 2
+        user:
+          $ref: '#/components/schemas/User'
+        permission_level:
+          type: string
+          enum: [read, write, admin]
+          description: Уровень доступа
+          example: "read"
+        granted_at:
+          type: string
+          format: date-time
+          description: Дата предоставления доступа
+      required:
+        - id
+        - project_id
+        - user_id
+        - user
+        - permission_level
+        - granted_at
+
+    ProjectPermissionCreate:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: ID пользователя для предоставления доступа
+          example: 2
+        permission_level:
+          type: string
+          enum: [read, write, admin]
+          description: Уровень доступа
+          example: "read"
+      required:
+        - user_id
+        - permission_level
+
+    ProjectPermissionUpdate:
+      type: object
+      properties:
+        permission_level:
+          type: string
+          enum: [read, write, admin]
+          description: Новый уровень доступа
+          example: "write"
+      required:
+        - permission_level
+
+    Script:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Уникальный идентификатор скрипта
+          example: 1
+        name:
+          type: string
+          description: Название скрипта
+          example: "Запрос пользователей"
+        content:
+          type: string
+          description: SQL код скрипта
+          example: "SELECT * FROM users WHERE active = 1;"
+        project_id:
+          type: integer
+          description: ID проекта, к которому принадлежит скрипт
+          example: 1
+        created_at:
+          type: string
+          format: date-time
+          description: Дата создания скрипта
+        updated_at:
+          type: string
+          format: date-time
+          description: Дата последнего обновления
+      required:
+        - id
+        - name
+        - content
+        - project_id
+        - created_at
+        - updated_at
+
+    ScriptCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название скрипта
+          example: "Новый скрипт"
+        content:
+          type: string
+          description: SQL код скрипта
+          example: "SELECT 1;"
+      required:
+        - name
+
+    ScriptUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Новое название скрипта
+        content:
+          type: string
+          description: Новый SQL код скрипта
+
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Описание ошибки
+          example: "Validation error"
+        code:
+          type: string
+          description: Код ошибки
+          example: "VALIDATION_ERROR"
+      required:
+        - detail
+
+tags:
+  - name: Health
+    description: Проверка состояния API
+  - name: Authentication
+    description: Аутентификация и управление пользователями
+  - name: Projects
+    description: Управление проектами
+  - name: Project Permissions
+    description: Управление правами доступа к проектам
+  - name: Scripts
+    description: Управление SQL скриптами
